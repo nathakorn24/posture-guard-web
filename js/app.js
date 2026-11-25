@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const $ = (id) => document.getElementById(id);
-  const POLL_MS = 5000;
+  const POLL_MS = 2000;   // v6.1: ดึงสถานะทุก 2 วิ (เครื่องส่งทันทีเมื่อท่าเปลี่ยน)
 
   // ================= ข้อความ TH / EN =================
   const I18N = {
@@ -21,7 +21,7 @@
       calib_row: "นั่งหลังชิดพนัก ตัวตรง แล้วกด เครื่องวัด 10 วินาที", test_row: "เครื่องจะปี๊บภายใน ~10 วินาที", start: "เริ่ม", test: "ทดสอบ",
       pair_bad: "รหัสไม่ถูกต้อง ตรวจตัวอักษรอีกครั้ง (รหัสไม่มีตัว O, I, 0, 1)", pair_len: "รหัสต้องมี 10 ตัว",
       pair_net: "เชื่อมต่ออินเทอร์เน็ตไม่ได้ ลองใหม่อีกครั้ง", hr_link: "สำหรับฝ่ายบุคคล (HR) →",
-      now: "ตอนนี้", every5: "อัปเดตทุก 5 วินาที", path_h: "เส้นทางท่านั่งวันนี้", idle_time: "ไม่ได้นั่ง / ลุกพัก",
+      now: "ตอนนี้", every5: "อัปเดตเรียลไทม์ (~2 วินาที)", path_h: "เส้นทางท่านั่งวันนี้", idle_time: "ไม่ได้นั่ง / ลุกพัก",
       g_morning: "สวัสดีตอนเช้า", g_afternoon: "สวัสดีตอนบ่าย", g_evening: "สวัสดีตอนเย็น", settings_greet: "ปรับให้เหมาะกับคุณ",
       sub_good: "ตัวตรง พิงพนัก ต่อเนื่อง {m} ทำได้ดีต่อไปนะ", sub_forward: "ถอยหลังพิงพนัก แล้วมองจอระดับสายตานะ",
       sub_backward: "ขยับสะโพกชิดพนัก นั่งตัวตรงขึ้นอีกนิด", sub_close: "ถอยเก้าอี้หรือดันจอออกไปให้ห่างอย่างน้อย {n} ซม.",
@@ -105,7 +105,7 @@
       calib_row: "Sit upright against the backrest, then press — the device measures for 10 s", test_row: "The device will beep within ~10 seconds", start: "Start", test: "Test",
       pair_bad: "Wrong code — check the letters (codes never use O, I, 0 or 1)", pair_len: "The code has 10 characters",
       pair_net: "No internet connection — try again", hr_link: "For HR →",
-      now: "Right now", every5: "Updates every 5 seconds", path_h: "Today's posture path", idle_time: "Not seated / break",
+      now: "Right now", every5: "Live (~2 seconds)", path_h: "Today's posture path", idle_time: "Not seated / break",
       g_morning: "Good morning", g_afternoon: "Good afternoon", g_evening: "Good evening", settings_greet: "Make it fit you",
       sub_good: "Upright against the backrest for {m}. Keep it up!", sub_forward: "Sit back against the chair and look at the screen at eye level",
       sub_backward: "Slide your hips back to the backrest and sit a little more upright", sub_close: "Move back so the screen is at least {n} cm away",
