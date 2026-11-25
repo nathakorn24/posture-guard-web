@@ -24,7 +24,7 @@
       nav: "เมนูหลัก", nav_home: "หน้าแรก", nav_stats: "สถิติ", nav_settings: "ตั้งค่า",
       status_h: "สถานะท่านั่ง", dist_h: "ห่างหน้าจอ", cm: "ซม.", bad_for: "ผิดท่าต่อเนื่อง", sit_for: "นั่งต่อเนื่อง", judged: "ตัดสินโดย",
       p_good: "นั่งถูกต้อง", p_forward: "โน้มตัว / ยื่นหน้าไปข้างหน้า", p_backward: "เอนหลังมากเกินไป / นั่งไหลลง",
-      p_away: "ยังไม่มีคนนั่ง", p_unknown: "กำลังวิเคราะห์…", badge_good: "✓ ดี", badge_bad: "✗ ผิดท่า",
+      p_away: "ยังไม่มีคนนั่ง", p_unknown: "กำลังวิเคราะห์…", badge_good: "✓ ดี", badge_bad: "✗ ผิดท่า", p_good_close: "ท่าดี แต่ใกล้จอเกินไป", p_good_far: "ท่าดี แต่ไกลจอเกินไป", p_good_other: "ท่าดี แต่ยังมีจุดต้องแก้",
       cap_good: "ท่าที่ถูกต้อง", cap_forward: "โน้มไปข้างหน้า", cap_backward: "เอนหลัง", cap_away: "ไม่มีคนนั่ง", cap_unknown: "กำลังวิเคราะห์",
       pose_alt: "รูปคนนั่ง: {p}", too_close: "ใกล้เกินไป (ควร ≥ {n} ซม.)", too_far: "ไกลเกินไป (ควร ≤ {n} ซม.)", dist_ok: "ระยะพอดี",
       src_ai_us: "กล้อง + ultrasonic ({c}%)", src_ai: "กล้องด้านข้าง ({c}%)", src_us: "ultrasonic ({c}%)", src_rules: "เกณฑ์ระยะ OSHA", src_sensors: "เซนเซอร์",
@@ -95,7 +95,7 @@
       nav: "Main menu", nav_home: "Home", nav_stats: "Statistics", nav_settings: "Settings",
       status_h: "Posture status", dist_h: "Distance to screen", cm: "cm", bad_for: "Bad posture for", sit_for: "Sitting for", judged: "Judged by",
       p_good: "Good posture", p_forward: "Leaning / head forward", p_backward: "Reclining / slouching back",
-      p_away: "Nobody seated", p_unknown: "Analysing…", badge_good: "✓ Good", badge_bad: "✗ Bad",
+      p_away: "Nobody seated", p_unknown: "Analysing…", badge_good: "✓ Good", badge_bad: "✗ Bad", p_good_close: "Good posture, but too close to the screen", p_good_far: "Good posture, but too far from the screen", p_good_other: "Good posture, but something needs fixing",
       cap_good: "Good posture", cap_forward: "Leaning forward", cap_backward: "Reclining", cap_away: "Empty chair", cap_unknown: "Analysing",
       pose_alt: "Seated figure: {p}", too_close: "Too close (keep ≥ {n} cm)", too_far: "Too far (keep ≤ {n} cm)", dist_ok: "Good distance",
       src_ai_us: "Camera + ultrasonic ({c}%)", src_ai: "Side camera ({c}%)", src_us: "Ultrasonic ({c}%)", src_rules: "OSHA distance rule", src_sensors: "Sensors",
@@ -302,7 +302,9 @@
     const bad = BAD.has(p) || (live.is_bad && p !== "away");
     const card = $("status-card");
     card.classList.toggle("bad", bad); card.classList.toggle("good", p === "good" && !bad);
-    $("posture-name").textContent = t("p_" + p);
+    // ท่าดีแต่ระยะจอผิด → บอกเหตุผลตรงๆ (กันหัวการ์ดขึ้น "ท่าดี" คู่กับป้าย "ผิดท่า" ซึ่งขัดกันเอง)
+    const dd = live.screen_cm, why = dd == null ? "other" : dd < (s.screen_min || 50) ? "close" : dd > (s.screen_max || 100) ? "far" : "other";
+    $("posture-name").textContent = p === "good" && bad ? t("p_good_" + why) : t("p_" + p);
     $("posture-badge").textContent = p === "away" || p === "unknown" ? "" : bad ? t("badge_bad") : t("badge_good");
     if (p !== lastPosture) {
       $("posture-live").textContent = t("p_" + p);
