@@ -548,7 +548,7 @@
 
   // ================= ตั้งค่า =================
   let formDirty = false;
-  const FIELDS = [["in-bad", "bad_seconds", 5, 600, "err-bad"], ["in-sit", "sit_minutes", 10, 180, "err-sit"],
+  const FIELDS = [["in-bad", "bad_seconds", 3, 600, "err-bad"], ["in-sit", "sit_minutes", 10, 180, "err-sit"],
     ["in-smin", "screen_min", 30, 90, "err-screen"], ["in-smax", "screen_max", 50, 150, "err-screen"]];
   function setSwitch(id, on) { $(id).setAttribute("aria-checked", String(!!on)); }
   function renderSettings() {
