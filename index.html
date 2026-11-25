@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Don't let your boss kill you back</title>
+  <meta name="theme-color" content="#2447B5">
+  <meta name="description" content="ดูท่านั่งและสถิติจากเครื่อง Posture Guard บนโต๊ะคุณ — ใช้ได้ทั้งมือถือและคอม">
+  <link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Boss Back">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">ข้ามไปเนื้อหาหลัก</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="logo" src="icons/logo.svg" alt="" width="40" height="40">
+      <div>
+        <p class="app-name">Don't let your boss kill you back</p>
+        <p class="conn" id="conn"><span class="dot" aria-hidden="true"></span><span id="conn-text" data-i18n="conn_wait">กำลังเชื่อมต่อ…</span></p>
+      </div>
+    </div>
+    <button type="button" class="icon-btn" id="btn-help" aria-haspopup="dialog" data-i18n-aria="help_open" aria-label="วิธีการใช้งาน">?</button>
+  </header>
+
+  <p class="cfg-banner" id="cfg-banner" role="status" hidden></p>
+  <div class="banner" id="bad-banner" role="alert" hidden>
+    <span class="banner-icon" aria-hidden="true">🔔</span>
+    <span><strong data-i18n="hey">Hey! คุณนั่งผิดท่า</strong> <span id="bad-banner-text"></span></span>
+  </div>
+  <div class="net-banner" id="net-banner" role="status" hidden data-i18n="net_err">เชื่อมต่อไม่ได้ กำลังลองใหม่…</div>
+
+  <main id="main" tabindex="-1">
+    <!-- ================= 0. จับคู่เครื่อง ================= -->
+    <section id="view-pair" class="view" aria-labelledby="h-pair" hidden>
+      <div class="card pair-card">
+        <h1 id="h-pair" data-i18n="pair_title">เชื่อมต่อกับเครื่องของคุณ</h1>
+        <p data-i18n="pair_desc">กรอกรหัสจับคู่ 10 ตัวที่สติกเกอร์บนเครื่อง หรือในหน้าเครื่อง (ตั้งค่า → บัญชี) ทำครั้งเดียวต่อเบราว์เซอร์</p>
+        <form id="pair-form" novalidate>
+          <label for="pair-code" data-i18n="pair_label">รหัสจับคู่</label>
+          <input id="pair-code" name="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
+                 inputmode="text" maxlength="14" placeholder="XXXX-XXXX-XX" aria-describedby="pair-hint pair-err" required>
+          <p class="hint" id="pair-hint"></p>
+          <p class="err" id="pair-err" role="alert"></p>
+          <button type="submit" class="btn primary block" id="btn-pair" data-i18n="pair_btn">เชื่อมต่อ</button>
+        </form>
+      </div>
+      <p class="center"><a href="hr/" data-i18n="hr_link">สำหรับฝ่ายบุคคล (HR) →</a></p>
+    </section>
+
+    <!-- ================= 1. หน้าแรก ================= -->
+    <section id="view-home" class="view" aria-labelledby="h-home" hidden>
+      <h1 id="h-home" class="visually-hidden" data-i18n="nav_home">หน้าแรก</h1>
+
+      <article class="card status-card" id="status-card" aria-labelledby="h-status">
+        <h2 id="h-status" class="visually-hidden" data-i18n="status_h">สถานะท่านั่ง</h2>
+        <div class="status-head">
+          <span class="bell" aria-hidden="true">🔔</span>
+          <p class="posture-name" id="posture-name">—</p>
+          <span class="badge" id="posture-badge"></span>
+        </div>
+        <p class="visually-hidden" id="posture-live" aria-live="polite"></p>
+        <div class="status-body">
+          <div class="dist">
+            <p class="label" data-i18n="dist_h">ห่างหน้าจอ</p>
+            <p class="dist-val"><span id="dist-val">—</span> <span data-i18n="cm">ซม.</span></p>
+            <p class="chip" id="dist-chip"></p>
+          </div>
+          <figure class="figure">
+            <svg id="pose-svg" viewBox="0 0 160 140" role="img" aria-labelledby="pose-cap"></svg>
+            <figcaption id="pose-cap" class="pose-cap">—</figcaption>
+          </figure>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="bad_for">ผิดท่าต่อเนื่อง</dt><dd id="f-bad">—</dd></div>
+          <div><dt data-i18n="sit_for">นั่งต่อเนื่อง</dt><dd id="f-sit">—</dd></div>
+          <div><dt data-i18n="judged">ตัดสินโดย</dt><dd id="f-src">—</dd></div>
+        </dl>
+      </article>
+
+      <article class="card warn" id="calib-card" hidden aria-labelledby="h-calib">
+        <h2 id="h-calib" data-i18n="calib_h">ยังไม่ได้ปรับเทียบท่า</h2>
+        <p data-i18n="calib_desc">นั่งหลังชิดพนัก ตัวตรง มองจอตรงๆ แล้วกดปุ่ม เครื่องจะวัดค้างไว้ 10 วินาที แล้วปี๊บเมื่อเสร็จ ultrasonic จึงช่วยตัดสินได้</p>
+        <button type="button" class="btn primary" data-cmd="calibrate" data-i18n="calib_btn">ปรับเทียบท่า</button>
+      </article>
+
+      <article class="card relax-card" aria-labelledby="h-relax">
+        <div class="card-head">
+          <h2 id="h-relax" data-i18n="relax_h">มาเริ่ม relax กัน!!</h2>
+          <button type="button" class="icon-btn small" id="btn-relax-info" aria-haspopup="dialog" data-i18n-aria="relax_info" aria-label="เราจะ relax ยังไง">i</button>
+        </div>
+        <p class="hint" data-i18n="relax_rule">กฎ 20-20-20: ทุก 20 นาที มองไกล 6 เมตร นาน 20 วินาที</p>
+        <div class="relax-row">
+          <p class="timer" id="relax-timer" role="timer" aria-live="off">20:00</p>
+          <button type="button" class="round-btn" id="btn-relax-toggle" data-i18n-aria="relax_pause" aria-label="หยุด">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path id="relax-icon" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+          </button>
+          <button type="button" class="round-btn" data-cmd="relax_reset" data-i18n-aria="relax_reset" aria-label="เริ่มนับใหม่">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+          </button>
+        </div>
+        <p class="hint" id="relax-state" aria-live="polite"></p>
+      </article>
+
+    </section>
+
+    <!-- ================= 2. สถิติ ================= -->
+    <section id="view-stats" class="view" aria-labelledby="h-stats" hidden>
+      <h1 id="h-stats" data-i18n="nav_stats">สถิติ</h1>
+      <div class="seg" role="group" data-i18n-aria="range" aria-label="ช่วงเวลา">
+        <button type="button" class="seg-btn" id="seg-day" aria-pressed="false" data-i18n="daily">รายวัน</button>
+        <button type="button" class="seg-btn" id="seg-week" aria-pressed="true" data-i18n="weekly">รายสัปดาห์</button>
+      </div>
+
+      <article class="card" aria-labelledby="h-chart">
+        <h2 id="h-chart">—</h2>
+        <div class="legend">
+          <span><i class="sw good" aria-hidden="true"></i><span data-i18n="good_time">ท่าถูก</span></span>
+          <span><i class="sw bad" aria-hidden="true"></i><span data-i18n="bad_time">ท่าผิด</span></span>
+        </div>
+        <div class="chart-wrap" id="chart"></div>
+        <div class="day-btns" id="day-btns"></div>
+        <p class="tip" id="chart-tip" role="status" aria-live="polite"></p>
+        <details class="table-toggle">
+          <summary data-i18n="as_table">แสดงเป็นตาราง</summary>
+          <div class="table-wrap" id="chart-table"></div>
+        </details>
+      </article>
+
+      <article class="card" aria-labelledby="h-total">
+        <h2 id="h-total" data-i18n="total_h">เวลานั่งทั้งหมด/วัน</h2>
+        <ul class="day-list" id="day-list"></ul>
+      </article>
+    </section>
+
+    <!-- ================= 3. ตั้งค่า ================= -->
+    <section id="view-settings" class="view" aria-labelledby="h-settings" hidden>
+      <h1 id="h-settings" data-i18n="nav_settings">ตั้งค่า</h1>
+
+      <article class="card" aria-labelledby="h-app">
+        <h2 id="h-app" data-i18n="app_h">แอปนี้</h2>
+        <div class="row">
+          <span class="row-label" id="lbl-lang"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15 15 0 0 0-1.3-3.9A8 8 0 0 1 18.9 8zM12 4a13 13 0 0 1 1.9 4h-3.8A13 13 0 0 1 12 4zM4.3 14a8 8 0 0 1 0-4h3.4a16 16 0 0 0 0 4zm.8 2h3a15 15 0 0 0 1.3 3.9A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.3-3.9A15 15 0 0 0 8.1 8zM12 20a13 13 0 0 1-1.9-4h3.8A13 13 0 0 1 12 20zm2.3-6H9.7a14 14 0 0 1 0-4h4.6a14 14 0 0 1 0 4zm.3 5.9a15 15 0 0 0 1.3-3.9h3a8 8 0 0 1-4.3 3.9zm1.7-5.9a16 16 0 0 0 0-4h3.4a8 8 0 0 1 0 4z"/></svg>Language</span>
+          <div class="seg small" role="group" aria-labelledby="lbl-lang">
+            <button type="button" class="seg-btn" data-lang="th" aria-pressed="true">TH</button>
+            <button type="button" class="seg-btn" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17.3V21h3.7L17.8 9.9l-3.7-3.7zM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8 3.7 3.7z"/></svg><span id="lbl-font" data-i18n="font">ขนาดตัวอักษร</span></span>
+          <div class="seg small" role="group" aria-labelledby="lbl-font">
+            <button type="button" class="seg-btn" data-font="1" aria-pressed="true" data-i18n="font_n">ปกติ</button>
+            <button type="button" class="seg-btn" data-font="1.15" aria-pressed="false" data-i18n="font_l">ใหญ่</button>
+            <button type="button" class="seg-btn" data-font="1.3" aria-pressed="false" data-i18n="font_xl">ใหญ่มาก</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 5.6l1.4-1.4 2.1 2.1-1.4 1.4zm12.1 12.1 1.4-1.4 2.1 2.1-1.4 1.4zM4.2 18.4l2.1-2.1 1.4 1.4-2.1 2.1zM16.3 6.3l2.1-2.1 1.4 1.4-2.1 2.1z"/></svg><span id="lbl-theme" data-i18n="theme">ธีม</span></span>
+          <div class="seg small" role="group" aria-labelledby="lbl-theme">
+            <button type="button" class="seg-btn" data-theme-btn="light" aria-pressed="true" data-i18n="light">สว่าง</button>
+            <button type="button" class="seg-btn" data-theme-btn="dark" aria-pressed="false" data-i18n="dark">มืด</button>
+          </div>
+        </div>
+      </article>
+
+      <form id="dev-form" class="settings-form" novalidate>
+      <article class="card" aria-labelledby="h-ch">
+        <h2 id="h-ch" data-i18n="ch_h">ช่องทางแจ้งเตือน</h2>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zm4 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm8 0a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg><span id="lbl-muted" data-i18n="sound_on">เสียงเตือนที่เครื่อง</span></span>
+          <button type="button" class="switch" id="sw-sound" role="switch" aria-checked="true" aria-labelledby="lbl-muted"><span aria-hidden="true"></span></button>
+        </div>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.5-2.5h-5A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.8V3a1.5 1.5 0 0 0-3 0v1.2A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg><span id="lbl-noti" data-i18n="web_noti">แจ้งเตือนบนเว็บ</span></span>
+          <button type="button" class="switch" id="sw-noti" role="switch" aria-checked="false" aria-labelledby="lbl-noti" aria-describedby="noti-hint noti-ios"><span aria-hidden="true"></span></button>
+        </div>
+        <p class="hint" id="noti-hint" data-i18n="noti_now">มีผลทันทีบนเบราว์เซอร์นี้ · เด้งเฉพาะตอนเปิดหน้านี้ไว้</p>
+        <p class="hint warn-text" id="noti-ios" data-i18n="noti_ios" hidden></p>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v13h10V5zm5 14.2a1 1 0 1 0 0 .1z"/></svg><span id="lbl-push" data-i18n="push">แจ้งเตือนเข้ามือถือ (ntfy)</span></span>
+          <button type="button" class="switch" id="sw-push" role="switch" aria-checked="false" aria-labelledby="lbl-push" aria-describedby="push-hint"><span aria-hidden="true"></span></button>
+        </div>
+        <p class="hint" id="push-hint"></p>
+      </article>
+
+      <article class="card" aria-labelledby="h-rule">
+        <h2 id="h-rule" data-i18n="rule_h">เกณฑ์ท่านั่ง</h2>
+        <div class="field">
+            <label for="in-bad" data-i18n="bad_seconds">เตือนเมื่อผิดท่าต่อเนื่อง (วินาที)</label>
+          <input id="in-bad" type="number" inputmode="numeric" min="5" max="600" step="1" aria-describedby="err-bad">
+          <p class="err" id="err-bad"></p>
+        </div>
+        <div class="field">
+          <label for="in-sit" data-i18n="sit_minutes">เตือนให้ลุกพักทุก (นาที)</label>
+          <input id="in-sit" type="number" inputmode="numeric" min="10" max="180" step="1" aria-describedby="err-sit">
+          <p class="err" id="err-sit"></p>
+        </div>
+        <fieldset class="field">
+          <legend data-i18n="screen_range">ระยะจอที่เหมาะ (ซม.) · OSHA แนะนำ 50–100</legend>
+          <div class="pair-inputs">
+            <label for="in-smin" data-i18n="min">ใกล้สุด</label>
+            <input id="in-smin" type="number" inputmode="numeric" min="30" max="90" step="1" aria-describedby="err-screen">
+            <label for="in-smax" data-i18n="max">ไกลสุด</label>
+            <input id="in-smax" type="number" inputmode="numeric" min="50" max="150" step="1" aria-describedby="err-screen">
+          </div>
+          <p class="err" id="err-screen"></p>
+        </fieldset>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5C6.5 5 2.7 9.2 1.5 12c1.2 2.8 5 7 10.5 7s9.3-4.2 10.5-7C21.3 9.2 17.5 5 12 5zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg><span id="lbl-eye" data-i18n="eye_auto">พักสายตา 20-20-20 อัตโนมัติ</span></span>
+          <button type="button" class="switch" id="sw-eye" role="switch" aria-checked="true" aria-labelledby="lbl-eye"><span aria-hidden="true"></span></button>
+        </div>
+        <button type="submit" class="btn primary" id="btn-save" data-i18n="save">บันทึก</button>
+        <p class="ok-msg" id="save-msg" role="status" aria-live="polite"></p>
+      </article>
+      </form>
+
+      <article class="card" aria-labelledby="h-desk">
+        <h2 id="h-desk" data-i18n="desk_h">เครื่องบนโต๊ะ</h2>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm0 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg><span><span class="row-title" data-i18n="calib_btn">ปรับเทียบท่า</span><span class="sub" id="cal-sub" data-i18n="calib_row">นั่งหลังชิดพนัก ตัวตรง แล้วกด เครื่องวัด 10 วินาที</span></span></span>
+          <button type="button" class="btn primary" data-cmd="calibrate" aria-describedby="cal-sub"><span data-i18n="start">เริ่ม</span><span class="visually-hidden" data-i18n="calib_btn">ปรับเทียบท่า</span></button>
+        </div>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9v6h4l5 4V5L7 9zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1A9 9 0 0 0 14 3.2z"/></svg><span><span class="row-title" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span><span class="sub" id="test-sub" data-i18n="test_row">เครื่องจะปี๊บภายใน ~10 วินาที</span></span></span>
+          <button type="button" class="btn" data-cmd="test_buzzer" aria-describedby="test-sub"><span data-i18n="test">ทดสอบ</span><span class="visually-hidden" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span></button>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="h-rep">
+        <h2 id="h-rep" data-i18n="report_h">รายงาน</h2>
+        <div class="row">
+          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2zm3 7a1.5 1.5 0 1 0 0 .1zm5 0a1.5 1.5 0 1 0 0 .1zm5 0a1.5 1.5 0 1 0 0 .1z"/></svg><span id="lbl-report" data-i18n="report_send">ส่งออกสถิติ</span></span>
+          <div class="btn-row tight" role="group" aria-labelledby="lbl-report">
+            <a class="btn" id="btn-mail" href="mailto:" data-i18n-aria="mail" aria-label="ส่งรายงานทางอีเมล"><svg class="row-ic m0" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18v14H3zm2 2v.5l7 4.5 7-4.5V7zm0 2.9V17h14V9.9l-7 4.5z"/></svg></a>
+            <button type="button" class="btn" id="btn-csv" data-i18n="csv">CSV</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="h-account">
+        <h2 id="h-account" data-i18n="account_h">บัญชีของฉัน</h2>
+        <p id="acc-status"></p>
+        <p class="hint" id="acc-desk"></p>
+        <div class="btn-row">
+          <button type="button" class="btn" id="btn-join" aria-haspopup="dialog" data-i18n="join">เข้าร่วมบริษัท</button>
+          <button type="button" class="btn" id="btn-leave" hidden data-i18n="leave">ออกจากบริษัท</button>
+          <button type="button" class="btn danger" id="btn-unpair" data-i18n="unpair">ยกเลิกจับคู่เบราว์เซอร์นี้</button>
+        </div>
+        <p class="ok-msg" id="acc-msg" role="status" aria-live="polite"></p>
+      </article>
+
+
+      <p class="center"><a href="hr/" data-i18n="hr_link">สำหรับฝ่ายบุคคล (HR) →</a></p>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar" data-i18n-aria="nav" aria-label="เมนูหลัก" hidden>
+    <a href="#home" class="tab" data-view="home"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><span data-i18n="nav_home">หน้าแรก</span></a>
+    <a href="#stats" class="tab" data-view="stats"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z"/></svg><span data-i18n="nav_stats">สถิติ</span></a>
+    <a href="#settings" class="tab" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-1.7-1L15 3.5h-4l-.4 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.7 1l.4 2.5h4l.4-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg><span data-i18n="nav_settings">ตั้งค่า</span></a>
+  </nav>
+
+  <!-- ================= หน้าต่าง ================= -->
+  <dialog id="dlg-help" aria-labelledby="h-help">
+    <h2 id="h-help" data-i18n="help_h">วิธีการใช้งาน</h2>
+    <ol class="steps">
+      <li data-i18n="help_1">ตั้งกล้องไว้ด้านข้างตัว ห่างประมาณ 1 เมตร สูงระดับไหล่ ให้เห็นหัว ไหล่ และสะโพก</li>
+      <li data-i18n="help_2">ติด ultrasonic ที่ขอบล่างจอ ตัวบนเล็งหน้า ตัวล่างเล็งหน้าอก</li>
+      <li data-i18n="help_3">นั่งตรง หลังชิดพนัก แล้วกด "ปรับเทียบท่า" ครั้งเดียว จากนั้นทำงานตามปกติ เครื่องจะเตือนด้วยเสียงเองเมื่อนั่งผิดท่า ไม่ต้องเปิดเว็บค้างไว้</li>
+    </ol>
+    <form method="dialog"><button class="btn primary" data-i18n="ok">เข้าใจแล้ว</button></form>
+  </dialog>
+
+  <dialog id="dlg-relax" aria-labelledby="h-relax-dlg">
+    <h2 id="h-relax-dlg" data-i18n="relax_dlg_h">เราจะ relax ยังไง</h2>
+    <ol class="steps">
+      <li data-i18n="relax_1">ทุก 20 นาที ละสายตาจากจอ</li>
+      <li data-i18n="relax_2">มองวัตถุที่อยู่ไกลประมาณ 20 ฟุต (6 เมตร)</li>
+      <li data-i18n="relax_3">มองค้างไว้อย่างน้อย 20 วินาที แล้วกระพริบตาช้าๆ</li>
+    </ol>
+    <p class="hint" data-i18n="relax_src">ที่มา: American Academy of Ophthalmology (กฎ 20-20-20)</p>
+    <form method="dialog"><button class="btn primary" data-i18n="ok">เข้าใจแล้ว</button></form>
+  </dialog>
+
+  <dialog id="dlg-join" aria-labelledby="h-join">
+    <h2 id="h-join" data-i18n="join_h">เข้าร่วมบริษัท</h2>
+    <form id="join-form" novalidate>
+      <div class="field">
+        <label for="j-company" data-i18n="company">บริษัท</label>
+        <select id="j-company" required aria-describedby="j-err"></select>
+      </div>
+      <div class="field">
+        <label for="j-pass" data-i18n="join_pass">รหัสผ่านพนักงาน (จากฝ่ายบุคคล)</label>
+        <input id="j-pass" type="password" autocomplete="off" required aria-describedby="j-err">
+      </div>
+      <div class="field">
+        <label for="j-dept" data-i18n="dept">แผนก</label>
+        <input id="j-dept" type="text" maxlength="40" autocomplete="organization-title">
+      </div>
+      <div class="check">
+        <input id="j-share" type="checkbox">
+        <label for="j-share" data-i18n="share">ยินยอมให้บริษัทเห็นชื่อและสถิติของฉัน (PDPA) — ถ้าไม่ติ๊ก บริษัทจะเห็นแค่รหัสโต๊ะ</label>
+      </div>
+      <div class="field" id="j-name-wrap" hidden>
+        <label for="j-name" data-i18n="disp_name">ชื่อที่จะแสดง</label>
+        <input id="j-name" type="text" maxlength="40" autocomplete="nickname">
+      </div>
+      <p class="err" id="j-err" role="alert"></p>
+      <div class="btn-row">
+        <button type="submit" class="btn primary" id="btn-join-go" data-i18n="join_go">เข้าร่วม</button>
+        <button type="button" class="btn" id="btn-join-cancel" data-i18n="cancel">ยกเลิก</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-confirm" aria-labelledby="h-confirm" aria-describedby="confirm-text">
+    <h2 id="h-confirm">—</h2>
+    <p id="confirm-text"></p>
+    <div class="btn-row">
+      <button type="button" class="btn danger" id="btn-confirm-yes">—</button>
+      <button type="button" class="btn" id="btn-confirm-no" data-i18n="cancel">ยกเลิก</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

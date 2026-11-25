@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard บริษัท — Don't let your boss kill you back</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">ข้ามไปเนื้อหาหลัก</a>
+  <header class="topbar">
+    <div class="brand"><span aria-hidden="true">🪑</span>
+      <div><p class="brand-name">Don't let your boss kill you back</p><p class="brand-sub" id="brand-sub">Dashboard บริษัท</p></div>
+    </div>
+    <div class="top-actions">
+      <button type="button" class="btn small" id="btn-logout" hidden>ออกจากระบบ</button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- ตั้งค่าการเชื่อมต่อ (ถ้า config.js ยังว่าง) -->
+    <section id="view-setup" class="view" aria-labelledby="h-setup" hidden>
+      <h1 id="h-setup" tabindex="-1">เชื่อมต่อฐานข้อมูล</h1>
+      <p>ใส่ค่าจาก Supabase → Project Settings → API Keys (ทำครั้งเดียวต่อเครื่อง หรือใส่ไว้ในไฟล์ <code>config.js</code>)</p>
+      <form id="setup-form" class="card stack" novalidate>
+        <div class="field">
+          <label for="sb-url">Project URL</label>
+          <input id="sb-url" type="url" inputmode="url" autocomplete="off" placeholder="https://xxxx.supabase.co" aria-describedby="sb-url-err" required>
+          <p class="field-err" id="sb-url-err" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="sb-key">คีย์ publishable / anon (ห้ามใช้คีย์ secret)</label>
+          <input id="sb-key" type="text" autocomplete="off" spellcheck="false" aria-describedby="sb-key-err" required>
+          <p class="field-err" id="sb-key-err" aria-live="polite"></p>
+        </div>
+        <p class="field-err" id="setup-err" role="alert"></p>
+        <div class="actions"><button type="submit" class="btn primary">บันทึกและเชื่อมต่อ</button></div>
+      </form>
+    </section>
+
+    <!-- ล็อกอิน / สร้างบริษัท -->
+    <section id="view-login" class="view" aria-labelledby="h-login" hidden>
+      <h1 id="h-login" tabindex="-1">สำหรับฝ่ายบุคคล / หัวหน้างาน</h1>
+      <div class="tabs" role="tablist" aria-label="เลือกการใช้งาน">
+        <button type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="panel-login">เข้าสู่ระบบ</button>
+        <button type="button" role="tab" id="tab-create" aria-selected="false" aria-controls="panel-create" tabindex="-1">สร้างบริษัทใหม่</button>
+      </div>
+      <div id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+        <form id="login-form" class="card stack" novalidate>
+          <div class="field">
+            <label for="login-company">บริษัท</label>
+            <select id="login-company" aria-describedby="login-company-err" required></select>
+            <p class="field-err" id="login-company-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="login-password">รหัสผู้ดูแล</label>
+            <input id="login-password" type="password" autocomplete="current-password" aria-describedby="login-password-err" required>
+            <p class="field-err" id="login-password-err" aria-live="polite"></p>
+          </div>
+          <p class="field-err" id="login-err" role="alert"></p>
+          <div class="actions"><button type="submit" class="btn primary" id="btn-login">เข้าสู่ระบบ</button></div>
+        </form>
+      </div>
+      <div id="panel-create" role="tabpanel" aria-labelledby="tab-create" hidden>
+        <form id="create-form" class="card stack" novalidate>
+          <div class="field">
+            <label for="co-name">ชื่อบริษัท (พนักงานจะเห็นชื่อนี้ในรายการ)</label>
+            <input id="co-name" type="text" maxlength="60" autocomplete="organization" aria-describedby="co-name-err" required>
+            <p class="field-err" id="co-name-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="co-admin">รหัสผู้ดูแล (อย่างน้อย 8 ตัว ใช้ล็อกอินหน้านี้)</label>
+            <input id="co-admin" type="password" autocomplete="new-password" aria-describedby="co-admin-err" required>
+            <p class="field-err" id="co-admin-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="co-admin2">ยืนยันรหัสผู้ดูแล</label>
+            <input id="co-admin2" type="password" autocomplete="new-password" aria-describedby="co-admin2-err" required>
+            <p class="field-err" id="co-admin2-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="co-join">รหัสพนักงาน (อย่างน้อย 6 ตัว แจกให้พนักงานใช้เข้าร่วม ต้องไม่ซ้ำกับรหัสผู้ดูแล)</label>
+            <input id="co-join" type="text" autocomplete="off" aria-describedby="co-join-err" required>
+            <p class="field-err" id="co-join-err" aria-live="polite"></p>
+          </div>
+          <p class="field-err" id="create-err" role="alert"></p>
+          <div class="actions"><button type="submit" class="btn primary" id="btn-create">สร้างบริษัท</button></div>
+        </form>
+      </div>
+      <p class="hint">ข้อมูลพนักงานเป็นข้อมูลสุขภาพตาม PDPA มาตรา 26 · ใช้เพื่อดูแลสุขภาพเท่านั้น ห้ามใช้ประเมินผลงานหรือลงโทษ</p>
+    </section>
+
+    <!-- ภาพรวม -->
+    <section id="view-dash" class="view" aria-labelledby="h-dash" hidden>
+      <div class="row-between">
+        <h1 id="h-dash" tabindex="-1">ภาพรวมบริษัท</h1>
+        <div class="actions">
+          <button type="button" class="btn small" id="btn-pause" aria-pressed="false">หยุดอัปเดตอัตโนมัติ</button>
+          <button type="button" class="btn small" id="btn-refresh">รีเฟรช</button>
+        </div>
+      </div>
+      <p class="hint" id="dash-updated" aria-live="polite"></p>
+      <div class="kpis" id="kpis"></div>
+
+      <article class="card" aria-labelledby="h-trend">
+        <h2 id="h-trend">ท่านั่ง 7 วันล่าสุด (ทั้งบริษัท)</h2>
+        <div id="trend-chart"></div>
+        <details><summary>ดูเป็นตาราง</summary><div class="table-wrap"><table id="trend-table"></table></div></details>
+      </article>
+
+      <article class="card" aria-labelledby="h-emp">
+        <div class="row-between">
+          <h2 id="h-emp">พนักงาน</h2>
+          <div class="field inline">
+            <label for="dept-filter">แผนก</label>
+            <select id="dept-filter"></select>
+          </div>
+        </div>
+        <div class="table-wrap"><table id="emp-table"><caption class="visually-hidden">รายชื่อพนักงานและสถานะท่านั่ง</caption></table></div>
+        <p class="hint">“โต๊ะ #รหัส” = พนักงานไม่ยินยอมให้แสดงชื่อ · สถานะสดอัปเดตทุก 10 วินาที</p>
+      </article>
+
+      <details class="card danger-zone">
+        <summary>ตั้งค่าบริษัท</summary>
+        <p>ลบบริษัท: ลบข้อมูลพนักงานทุกคนและบริษัทออกจากระบบถาวร</p>
+        <button type="button" class="btn danger" id="btn-delete-company">ลบบริษัทนี้</button>
+      </details>
+    </section>
+
+    <!-- รายบุคคล -->
+    <section id="view-emp" class="view" aria-labelledby="h-emp-detail" hidden>
+      <button type="button" class="btn small" id="btn-back">← กลับไปภาพรวม</button>
+      <h1 id="h-emp-detail" tabindex="-1">พนักงาน</h1>
+      <p id="emp-meta"></p>
+      <div class="kpis" id="emp-kpis"></div>
+      <article class="card" aria-labelledby="h-emp-trend">
+        <h2 id="h-emp-trend">14 วันล่าสุด</h2>
+        <div id="emp-chart"></div>
+        <div class="table-wrap"><table id="emp-days"></table></div>
+      </article>
+      <details class="card danger-zone">
+        <summary>นำพนักงานออก</summary>
+        <p>ลบโต๊ะนี้และสถิติทั้งหมดของโต๊ะนี้ออกจากบริษัท พนักงานต้องเข้าร่วมใหม่ถ้าจะใช้ต่อ</p>
+        <button type="button" class="btn danger" id="btn-remove-emp">นำพนักงานคนนี้ออก</button>
+      </details>
+    </section>
+
+    <p id="status" class="message" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="../config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
