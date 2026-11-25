@@ -21,7 +21,20 @@
       calib_row: "นั่งหลังชิดพนัก ตัวตรง แล้วกด เครื่องวัด 10 วินาที", test_row: "เครื่องจะปี๊บภายใน ~10 วินาที", start: "เริ่ม", test: "ทดสอบ",
       pair_bad: "รหัสไม่ถูกต้อง ตรวจตัวอักษรอีกครั้ง (รหัสไม่มีตัว O, I, 0, 1)", pair_len: "รหัสต้องมี 10 ตัว",
       pair_net: "เชื่อมต่ออินเทอร์เน็ตไม่ได้ ลองใหม่อีกครั้ง", hr_link: "สำหรับฝ่ายบุคคล (HR) →",
-      nav: "เมนูหลัก", nav_home: "หน้าแรก", nav_stats: "สถิติ", nav_settings: "ตั้งค่า",
+      now: "ตอนนี้", every5: "อัปเดตทุก 5 วินาที", path_h: "เส้นทางท่านั่งวันนี้", idle_time: "ไม่ได้นั่ง / ลุกพัก",
+      g_morning: "สวัสดีตอนเช้า", g_afternoon: "สวัสดีตอนบ่าย", g_evening: "สวัสดีตอนเย็น", settings_greet: "ปรับให้เหมาะกับคุณ",
+      sub_good: "ตัวตรง พิงพนัก ต่อเนื่อง {m} ทำได้ดีต่อไปนะ", sub_forward: "ถอยหลังพิงพนัก แล้วมองจอระดับสายตานะ",
+      sub_backward: "ขยับสะโพกชิดพนัก นั่งตัวตรงขึ้นอีกนิด", sub_close: "ถอยเก้าอี้หรือดันจอออกไปให้ห่างอย่างน้อย {n} ซม.",
+      sub_far: "ขยับเข้าใกล้จอขึ้นอีกนิด ไม่เกิน {n} ซม.", sub_other: "ลองนั่งตัวตรง พิงพนัก แล้วรอเครื่องตรวจรอบถัดไป",
+      sub_away: "เครื่องพร้อมตรวจเมื่อคุณกลับมานั่ง", sub_unknown: "กำลังรอข้อมูลจากเครื่อง",
+      today_note: "ของเวลานั่งวันนี้เป็นท่าถูก", d_up: "ดีขึ้น {n}% จากเมื่อวาน", d_down: "ลดลง {n}% จากเมื่อวาน", d_same: "เท่ากับเมื่อวาน",
+      streak: "นั่งดีติดกัน {n} วัน", tl_now: "ตอนนี้", tl_alt: "ไทม์ไลน์วันนี้ {a}:00 ถึงตอนนี้ ท่าถูก {g} ท่าผิด {b}", tl_empty: "ยังไม่มีข้อมูลการนั่งวันนี้",
+      sum_h: "ท่าถูกเฉลี่ย 7 วัน", sum_sit: "นั่งรวม", sum_alerts: "ถูกเตือน", sum_breaks: "ลุกพัก", sum_d: "{n}% จาก 7 วันก่อน", times: "{n} ครั้ง",
+      ins_h: "ข้อสังเกต", ins_worst: "วันนี้คุณผิดท่ามากที่สุดช่วง {a}:00–{b}:00 ({m}) ลองลุกเดินสั้นๆ ก่อนช่วงนั้น หรือยกจอให้สูงระดับสายตา",
+      ins_good: "วันนี้นั่งท่าถูก {p}% ของเวลา ยังไม่มีช่วงที่ผิดท่าเกิน 2 นาที ทำได้ดีมาก!", ins_none: "ยังไม่มีข้อมูลพอ นั่งทำงานหน้าเครื่องสักพักแล้วข้อสังเกตจะขึ้นที่นี่",
+      sound_sub: "buzzer ดังเมื่อผิดท่าต่อเนื่อง", pair_s1: "เปิดเครื่องบนโต๊ะ ต่อ Wi-Fi", pair_s2: "ดูรหัส 10 ตัวในหน้าเครื่อง (ตั้งค่า → บัญชี)", pair_s3: "กรอกรหัสด้านล่าง ทำครั้งเดียวต่อเบราว์เซอร์",
+      bad_for_s: "ผิดท่ามา {s}",
+      nav: "เมนูหลัก", nav_home: "วันนี้", nav_stats: "สถิติ", nav_settings: "ตั้งค่า",
       status_h: "สถานะท่านั่ง", dist_h: "ห่างหน้าจอ", cm: "ซม.", bad_for: "ผิดท่าต่อเนื่อง", sit_for: "นั่งต่อเนื่อง", judged: "ตัดสินโดย",
       p_good: "นั่งถูกต้อง", p_forward: "โน้มตัว / ยื่นหน้าไปข้างหน้า", p_backward: "เอนหลังมากเกินไป / นั่งไหลลง",
       p_away: "ยังไม่มีคนนั่ง", p_unknown: "กำลังวิเคราะห์…", badge_good: "✓ ดี", badge_bad: "✗ ผิดท่า", p_good_close: "ท่าดี แต่ใกล้จอเกินไป", p_good_far: "ท่าดี แต่ไกลจอเกินไป", p_good_other: "ท่าดี แต่ยังมีจุดต้องแก้",
@@ -50,7 +63,7 @@
       noti_denied: "เบราว์เซอร์ไม่อนุญาตการแจ้งเตือน เปิดได้ที่การตั้งค่าเว็บไซต์ของเบราว์เซอร์",
       device_h: "ของเครื่อง", sound_on: "เสียงเตือนที่เครื่อง", eye_auto: "พักสายตา 20-20-20 อัตโนมัติ",
       bad_seconds: "เตือนเมื่อผิดท่าต่อเนื่อง (วินาที)", sit_minutes: "เตือนให้ลุกพักทุก (นาที)",
-      screen_range: "ระยะจอที่เหมาะ (ซม.) · OSHA แนะนำ 50–100", min: "ใกล้สุด", max: "ไกลสุด",
+      screen_range: "ระยะจอที่เหมาะ (ซม.)", screen_sub: "OSHA แนะนำ 50–100", min: "ใกล้สุด", max: "ไกลสุด",
       push: "แจ้งเตือนเข้ามือถือ (ntfy)", push_off: "เปิดแล้วจะได้แจ้งเตือนในมือถือแม้ปิดหน้าจอ (ผ่านแอป ntfy ฟรี)",
       push_wait: "บันทึกแล้ว รอเครื่องสร้างช่องแจ้งเตือน (~10 วินาที)",
       push_on: "ติดตั้งแอป ntfy แล้วกดติดตามช่องนี้:", push_link: "เปิดช่องแจ้งเตือน",
@@ -92,7 +105,20 @@
       calib_row: "Sit upright against the backrest, then press — the device measures for 10 s", test_row: "The device will beep within ~10 seconds", start: "Start", test: "Test",
       pair_bad: "Wrong code — check the letters (codes never use O, I, 0 or 1)", pair_len: "The code has 10 characters",
       pair_net: "No internet connection — try again", hr_link: "For HR →",
-      nav: "Main menu", nav_home: "Home", nav_stats: "Statistics", nav_settings: "Settings",
+      now: "Right now", every5: "Updates every 5 seconds", path_h: "Today's posture path", idle_time: "Not seated / break",
+      g_morning: "Good morning", g_afternoon: "Good afternoon", g_evening: "Good evening", settings_greet: "Make it fit you",
+      sub_good: "Upright against the backrest for {m}. Keep it up!", sub_forward: "Sit back against the chair and look at the screen at eye level",
+      sub_backward: "Slide your hips back to the backrest and sit a little more upright", sub_close: "Move back so the screen is at least {n} cm away",
+      sub_far: "Move a little closer — no more than {n} cm", sub_other: "Sit upright against the backrest and wait for the next check",
+      sub_away: "The device is ready when you sit back down", sub_unknown: "Waiting for data from the device",
+      today_note: "of today's sitting time in good posture", d_up: "{n}% better than yesterday", d_down: "{n}% lower than yesterday", d_same: "Same as yesterday",
+      streak: "{n}-day good streak", tl_now: "Now", tl_alt: "Today's timeline from {a}:00 to now: good {g}, bad {b}", tl_empty: "No sitting data yet today",
+      sum_h: "7-day good posture average", sum_sit: "Sitting", sum_alerts: "Alerts", sum_breaks: "Breaks", sum_d: "{n}% vs previous 7 days", times: "{n}",
+      ins_h: "Insight", ins_worst: "Today your posture slipped most between {a}:00 and {b}:00 ({m}). Try a short walk before then, or raise the screen to eye level",
+      ins_good: "{p}% of today in good posture, with no stretch of bad posture over 2 minutes. Great job!", ins_none: "Not enough data yet — work at the device for a while and an insight will appear here",
+      sound_sub: "The buzzer sounds when bad posture continues", pair_s1: "Turn on the desk device and connect Wi-Fi", pair_s2: "Find the 10-character code on the device page (Settings → Account)", pair_s3: "Enter it below — once per browser",
+      bad_for_s: "bad posture for {s}",
+      nav: "Main menu", nav_home: "Today", nav_stats: "Statistics", nav_settings: "Settings",
       status_h: "Posture status", dist_h: "Distance to screen", cm: "cm", bad_for: "Bad posture for", sit_for: "Sitting for", judged: "Judged by",
       p_good: "Good posture", p_forward: "Leaning / head forward", p_backward: "Reclining / slouching back",
       p_away: "Nobody seated", p_unknown: "Analysing…", badge_good: "✓ Good", badge_bad: "✗ Bad", p_good_close: "Good posture, but too close to the screen", p_good_far: "Good posture, but too far from the screen", p_good_other: "Good posture, but something needs fixing",
@@ -121,7 +147,7 @@
       noti_denied: "The browser blocked notifications — allow them in the browser's site settings",
       device_h: "Device", sound_on: "Device alert sound", eye_auto: "Automatic 20-20-20 eye breaks",
       bad_seconds: "Alert after bad posture for (seconds)", sit_minutes: "Remind me to stand up every (minutes)",
-      screen_range: "Ideal screen distance (cm) · OSHA recommends 50–100", min: "Nearest", max: "Farthest",
+      screen_range: "Ideal screen distance (cm)", screen_sub: "OSHA recommends 50–100", min: "Nearest", max: "Farthest",
       push: "Phone notifications (ntfy)", push_off: "Get alerts on your phone even with the screen off (free ntfy app)",
       push_wait: "Saved — waiting for the device to create your channel (~10 s)",
       push_on: "Install the ntfy app and subscribe to this channel:", push_link: "Open notification channel",
@@ -321,6 +347,13 @@
     else { chip.textContent = t("dist_ok"); chip.classList.add("ok"); }
     drawPose(p);
     $("pose-cap").textContent = t("cap_" + p);
+    $("posture-sub").textContent = p === "good" && !bad ? t("sub_good", { m: fmtDur(live.sit_for) })
+      : p === "good" ? t("sub_" + why, { n: why === "close" ? (s.screen_min || 50) : (s.screen_max || 100) })
+      : t("sub_" + p);
+    const hr = new Date().getHours();
+    $("greet").textContent = (hr < 12 ? t("g_morning") : hr < 17 ? t("g_afternoon") : t("g_evening")) + " · " +
+      new Date().toLocaleDateString(prefs.lang === "en" ? "en-GB" : "th-TH", { weekday: "long", day: "numeric", month: "short" });
+    renderPath();
     $("f-bad").textContent = bad ? fmtDur(live.bad_for) : "—";
     $("f-sit").textContent = live.present ? fmtDur(live.sit_for) : "—";
     const src = live.posture_source, c = Math.round((live.confidence || 0) * 100);
@@ -328,7 +361,7 @@
     // แถบเตือน
     const showBanner = bad && live.nudge && live.nudge !== "none";
     $("bad-banner").hidden = !showBanner;
-    $("bad-banner-text").textContent = showBanner ? "— " + t("p_" + p) : "";
+    $("bad-banner-text").textContent = showBanner ? $("posture-name").textContent + " · " + t("bad_for_s", { s: fmtDur(live.bad_for) }) : "";
     $("calib-card").hidden = live.calibrated !== false;
     renderRelax();
   }
@@ -336,38 +369,56 @@
     const left = relaxLocal.running ? relaxLocal.left - (Date.now() - relaxLocal.at) / 1000 : relaxLocal.left;
     $("relax-timer").textContent = mmss(Math.max(0, left));
     const btn = $("btn-relax-toggle");
-    btn.setAttribute("aria-label", relaxLocal.running ? t("relax_pause") : t("relax_play"));
+    $("relax-toggle-text").textContent = relaxLocal.running ? t("relax_pause") : t("relax_play");
+    $("relax-ring").setAttribute("stroke-dashoffset", (213.6 * Math.max(0, Math.min(1, left / 1200))).toFixed(1));
     $("relax-icon").setAttribute("d", relaxLocal.running ? "M7 5h4v14H7zM13 5h4v14h-4z" : "M8 5v14l11-7z");
     const st = left <= 0 && relaxLocal.running ? t("relax_due") : relaxLocal.running ? t("relax_running") : t("relax_paused");
     if ($("relax-state").textContent !== st) $("relax-state").textContent = st;
   }
   setInterval(() => { if (data && !$("view-home").hidden) renderRelax(); }, 1000);
 
-  // รูปคนนั่ง (SVG วาดเอง)
-  const POSES = {
-    good: { hip: [56, 88], sh: [54, 52], head: [55, 37], hand: [104, 82], elbow: [76, 74] },
-    forward: { hip: [58, 88], sh: [80, 56], head: [95, 47], hand: [108, 82], elbow: [96, 76] },
-    backward: { hip: [70, 92], sh: [44, 60], head: [36, 46], hand: [100, 84], elbow: [70, 80] },
-  };
+  // ตัวละคร low-poly (js/art.js) — เปลี่ยนเฉพาะตอนท่าเปลี่ยน กันแอนิเมชันกระตุก
   function drawPose(p) {
-    const svg = $("pose-svg");
-    const chair = '<path d="M30 40v52h44M30 92v34M70 92v34" fill="none" stroke="var(--muted)" stroke-width="4" stroke-linecap="round"/>';
-    const desk = '<path d="M98 90h58M150 90v36M118 40h34v30h-34zM135 70v20" fill="none" stroke="var(--muted)" stroke-width="4" stroke-linejoin="round"/>';
-    let body = "";
-    const pose = POSES[p];
-    if (pose) {
-      const col = p === "good" ? "var(--good)" : "var(--bad)";
-      const knee = [pose.hip[0] + 30, pose.hip[1] + 2], foot = [knee[0] + 2, 126];
-      const L = (a, b) => `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`;
-      body = `<g stroke="${col}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
-        <path d="${L(pose.hip, pose.sh)}${L(pose.hip, knee)}${L(knee, foot)}${L(pose.sh, pose.elbow)}${L(pose.elbow, pose.hand)}"/></g>
-        <circle cx="${pose.head[0]}" cy="${pose.head[1]}" r="10" fill="${col}"/>`;
-      if (p !== "good") body += `<text x="${pose.head[0] + 12}" y="${pose.head[1] - 12}" font-size="20" font-weight="700" fill="${col}">!</text>`;
-    } else if (p === "unknown") {
-      body = '<text x="52" y="76" font-size="34" font-weight="700" fill="var(--muted)">?</text>';
+    const el = $("pose-svg");
+    if (el.dataset.p !== p) { el.innerHTML = (window.PG_ART || {})[p] || ""; el.dataset.p = p; }
+    el.setAttribute("aria-label", t("pose_alt", { p: t("cap_" + p) }));
+  }
+
+  // เส้นทางท่านั่งวันนี้: % ท่าถูก + เทียบเมื่อวาน + ไทม์ไลน์รายชั่วโมง + นั่งดีติดกันกี่วัน (ข้อมูลจริงจากเครื่อง)
+  function pctOf(d) { return d && d.sit_s > 0 ? Math.round((d.good_s / d.sit_s) * 100) : null; }
+  function renderPath() {
+    const days = data.days || [], today = days[days.length - 1], yest = days[days.length - 2];
+    const p = pctOf(today), py = pctOf(yest);
+    $("today-pct").textContent = p == null ? "—" : p + "%";
+    $("today-note").textContent = p == null ? t("tl_empty") : t("today_note");
+    const del = $("today-delta");
+    del.className = "delta";
+    if (p == null || py == null) del.textContent = "";
+    else if (p === py) del.textContent = t("d_same");
+    else { del.textContent = t(p > py ? "d_up" : "d_down", { n: Math.abs(p - py) }); if (p < py) del.classList.add("down"); }
+    // นั่งดีติดกัน: วันที่นั่ง ≥ 30 นาที และท่าถูก ≥ 70% (วันนี้ยังน้อยก็ไม่ตัด)
+    let n = 0;
+    for (let i = days.length - 1; i >= 0; i--) {
+      const d = days[i], q = pctOf(d);
+      if (i === days.length - 1 && (!d || d.sit_s < 1800)) continue;
+      if (d.sit_s >= 1800 && q >= 70) n++; else break;
     }
-    svg.innerHTML = chair + desk + body;
-    svg.setAttribute("aria-label", t("pose_alt", { p: t("cap_" + p) }));
+    $("streak").hidden = n < 2;
+    $("streak-text").textContent = t("streak", { n });
+    // ไทม์ไลน์
+    const hours = ((data.live || {}).hours || []).map((h) => [h[0] || 0, h[1] || 0]);
+    const now = new Date().getHours();
+    let start = hours.findIndex((h) => h[0] + h[1] > 0);
+    if (start < 0 || start > now) start = Math.max(0, Math.min(8, now));
+    const tl = $("timeline"); let html = "", gT = 0, bT = 0;
+    for (let h = start; h <= now; h++) {
+      const [g, b] = hours[h] || [0, 0]; gT += g; bT += b;
+      html += `<span class="tl-h"><span class="tl-g" style="height:${Math.min(100, g / 36).toFixed(1)}%"></span><span class="tl-b" style="height:${Math.min(100, b / 36).toFixed(1)}%"></span></span>`;
+    }
+    tl.innerHTML = html;
+    tl.setAttribute("aria-label", gT + bT > 0 ? t("tl_alt", { a: start, g: fmtDur(gT), b: fmtDur(bT) }) : t("tl_empty"));
+    const mid = Math.round((start + now) / 2);
+    $("tl-axis").innerHTML = `<span>${String(start).padStart(2, "0")}:00</span>${now - start > 2 ? `<span>${String(mid).padStart(2, "0")}:00</span>` : ""}<span>${t("tl_now")}</span>`;
   }
 
   // ================= สถิติ =================
@@ -385,21 +436,43 @@
     const days = (data.days || []).slice(-7);
     $("h-chart").textContent = statsMode === "day" ? t("chart_day") : t("chart_week");
     if (statsMode === "week") drawWeek(days); else drawDay();
+    renderSummary(); renderInsight();
+    if (days.length) $("stats-range").textContent = dateLabel(days[0].date) + " – " + dateLabel(days[days.length - 1].date);
     // รายการรายวัน (ใหม่ → เก่า)
     const ul = $("day-list"); ul.innerHTML = "";
-    const all = (data.days || []).slice().reverse().filter((d) => d.sit_s > 0);
+    const all = (data.days || []).slice(-7).reverse().filter((d) => d.sit_s > 0);
     if (!all.length) { const li = document.createElement("li"); li.textContent = t("no_data"); ul.appendChild(li); }
     all.forEach((d) => {
       const li = document.createElement("li");
       const pct = d.sit_s ? Math.round((d.good_s / d.sit_s) * 100) : 0;
-      li.innerHTML = `<span></span><span class="big"></span><span class="sub"></span>`;
-      li.children[0].textContent = dateLabel(d.date);
-      li.children[1].textContent = fmtDur(d.sit_s);
-      li.children[2].textContent = t("day_sub", { p: pct, a: d.alerts, r: d.breaks });
+      li.innerHTML = `<span class="dl-text"><span class="dl-date"></span><br><span class="dl-sub"></span></span><span class="dl-time"></span>`;
+      li.querySelector(".dl-date").textContent = dateLabel(d.date);
+      li.querySelector(".dl-sub").textContent = t("day_sub", { p: pct, a: d.alerts, r: d.breaks });
+      li.querySelector(".dl-time").textContent = fmtDur(d.sit_s);
       ul.appendChild(li);
     });
   }
-  const W = 340, H = 180, PAD = { l: 30, r: 10, t: 10, b: 24 };
+  function sumDays(arr) { return arr.reduce((o, d) => ({ sit: o.sit + (d.sit_s || 0), good: o.good + (d.good_s || 0), alerts: o.alerts + (d.alerts || 0), breaks: o.breaks + (d.breaks || 0) }), { sit: 0, good: 0, alerts: 0, breaks: 0 }); }
+  function renderSummary() {
+    const all = data.days || [], cur = sumDays(all.slice(-7)), prev = sumDays(all.slice(-14, -7));
+    const p = cur.sit ? Math.round((cur.good / cur.sit) * 100) : null, pp = prev.sit ? Math.round((prev.good / prev.sit) * 100) : null;
+    $("sum-pct").textContent = p == null ? "—" : p + "%";
+    const dl = $("sum-delta");
+    dl.hidden = p == null || pp == null || p === pp;
+    if (!dl.hidden) { dl.textContent = (p > pp ? "▲ " : "▼ ") + t("sum_d", { n: Math.abs(p - pp) }); dl.className = "pill" + (p < pp ? " down" : ""); }
+    $("sum-sit").textContent = fmtDur(cur.sit);
+    $("sum-alerts").textContent = t("times", { n: cur.alerts });
+    $("sum-breaks").textContent = t("times", { n: cur.breaks });
+  }
+  function renderInsight() {
+    const hours = ((data.live || {}).hours || []);
+    let worst = -1, wb = 0;
+    hours.forEach((h, i) => { if ((h[1] || 0) > wb) { wb = h[1]; worst = i; } });
+    const days = data.days || [], p = pctOf(days[days.length - 1]);
+    $("insight-text").textContent = worst >= 0 && wb >= 120 ? t("ins_worst", { a: String(worst).padStart(2, "0"), b: String((worst + 1) % 24).padStart(2, "0"), m: fmtDur(wb) })
+      : p != null ? t("ins_good", { p }) : t("ins_none");
+  }
+  const W = 340, H = 190, PAD = { l: 30, r: 10, t: 10, b: 24 };
   function axis(maxH, unitLabel) {
     let g = "";
     const steps = 4;
@@ -411,25 +484,24 @@
     return g;
   }
   const PATTERN = `<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-    <rect width="6" height="6" fill="var(--bad-bg)"/><rect width="3" height="6" fill="var(--bad)"/></pattern></defs>`;
+    <rect width="6" height="6" fill="var(--bad-soft)"/><rect width="3" height="6" fill="var(--bad-fill)"/></pattern></defs>`;
   function drawWeek(days) {
     const wrap = $("chart"), btns = $("day-btns");
     btns.hidden = false;
     const maxH = Math.max(1, Math.ceil(Math.max(...days.map((d) => d.sit_s / 3600), 1)));
-    const x = (i) => PAD.l + ((W - PAD.l - PAD.r) / Math.max(1, days.length - 1)) * i;
+    const slot = (W - PAD.l - PAD.r) / Math.max(1, days.length), bw = Math.min(28, slot * .55);
+    const x = (i) => PAD.l + slot * i + slot / 2;
     const y = (h) => H - PAD.b - (h / maxH) * (H - PAD.t - PAD.b);
-    const line = (key) => days.map((d, i) => `${i ? "L" : "M"}${x(i)} ${y(d[key] / 3600)}`).join("");
     let pts = "";
     days.forEach((d, i) => {
-      pts += `<rect class="pt" data-i="${i}" x="${x(i) - 16}" y="${PAD.t}" width="32" height="${H - PAD.t - PAD.b}" fill="transparent"/>`;
-      pts += `<circle cx="${x(i)}" cy="${y(d.good_s / 3600)}" r="${i === selDay ? 7 : 5}" fill="var(--good)" pointer-events="none"/>`;
-      pts += `<rect x="${x(i) - 5}" y="${y(d.bad_s / 3600) - 5}" width="10" height="10" fill="url(#hatch)" stroke="var(--bad)" stroke-width="2"/>`;
-      pts += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">${dayName(d.date)}</text>`;
+      const g = d.good_s / 3600, b = d.bad_s / 3600, sel = i === selDay;
+      pts += `<rect class="pt" data-i="${i}" x="${x(i) - slot / 2}" y="${PAD.t}" width="${slot}" height="${H - PAD.t - PAD.b}" fill="transparent"/>`;
+      if (g > 0) pts += `<rect x="${x(i) - bw / 2}" y="${y(g)}" width="${bw}" height="${y(0) - y(g)}" rx="6" fill="var(--good)" pointer-events="none"/>`;
+      if (b > 0) pts += `<rect x="${x(i) - bw / 2}" y="${y(g + b)}" width="${bw}" height="${y(g) - y(g + b)}" rx="6" fill="url(#hatch)" stroke="var(--bad)" stroke-width="1" pointer-events="none"/>`;
+      if (sel) pts += `<rect x="${x(i) - bw / 2 - 4}" y="${y(g + b) - 4}" width="${bw + 8}" height="${y(0) - y(g + b) + 8}" rx="9" fill="none" stroke="var(--ink)" stroke-width="2" pointer-events="none"/>`;
     });
     const summary = days.map((d) => `${dayName(d.date)} ${t("good_time")} ${fmtDur(d.good_s)}, ${t("bad_time")} ${fmtDur(d.bad_s)}`).join("; ");
-    wrap.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="">${PATTERN}${axis(maxH, (v) => Math.round(v * 10) / 10 + "h")}
-      <path d="${line("good_s")}" fill="none" stroke="var(--good)" stroke-width="3"/>
-      <path d="${line("bad_s")}" fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="6 4"/>${pts}</svg>`;
+    wrap.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="">${PATTERN}${axis(maxH, (v) => Math.round(v * 10) / 10 + "h")}${pts}</svg>`;
     wrap.firstChild.setAttribute("aria-label", t("chart_alt_week", { s: summary || t("no_data") }));
     // กดจุดบนกราฟ (เมาส์/นิ้ว) = กดปุ่มวันด้านล่าง (ปุ่มวันใช้คีย์บอร์ดได้)
     wrap.onclick = (ev) => { const el = ev.target.closest(".pt"); if (el) btns.children[Number(el.dataset.i)].click(); };

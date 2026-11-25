@@ -2,7 +2,7 @@
 <html lang="th" data-theme="light">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <title>Don't let your boss kill you back</title>
   <meta name="theme-color" content="#2447B5">
@@ -13,6 +13,9 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Boss Back">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,233 +23,272 @@
 
   <header class="topbar">
     <div class="brand">
-      <img class="logo" src="icons/logo.svg" alt="" width="40" height="40">
-      <div>
+      <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6E9BFF"/><stop offset="1" stop-color="#2447B5"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="18" fill="url(#lg1)"/><path d="M2 40 L62 22 V44 A18 18 0 0 1 44 62 H20 A18 18 0 0 1 2 44 Z" fill="#1F3E9E" opacity=".35"/><circle cx="34" cy="15" r="6.5" fill="#FFFFFF"/><path d="M32 25 V43 H45 V53" stroke="#FFFFFF" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M22 20 V48" stroke="#FFB07A" stroke-width="7.5" stroke-linecap="round"/></svg>
+      <div class="brand-text">
         <p class="app-name">Don't let your boss kill you back</p>
         <p class="conn" id="conn"><span class="dot" aria-hidden="true"></span><span id="conn-text" data-i18n="conn_wait">กำลังเชื่อมต่อ…</span></p>
       </div>
     </div>
-    <button type="button" class="icon-btn" id="btn-help" aria-haspopup="dialog" data-i18n-aria="help_open" aria-label="วิธีการใช้งาน">?</button>
+    <button type="button" class="help-btn" id="btn-help" aria-haspopup="dialog" data-i18n-aria="help_open" aria-label="วิธีการใช้งาน">?</button>
   </header>
 
   <p class="cfg-banner" id="cfg-banner" role="status" hidden></p>
-  <div class="banner" id="bad-banner" role="alert" hidden>
-    <span class="banner-icon" aria-hidden="true">🔔</span>
-    <span><strong data-i18n="hey">Hey! คุณนั่งผิดท่า</strong> <span id="bad-banner-text"></span></span>
+  <div class="alert-banner" id="bad-banner" role="alert" hidden>
+    <span class="tile" aria-hidden="true"><svg width="35" height="35" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient><linearGradient id="cg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M12 21a12 12 0 0 1 24 0c0 9 4 12 4 12H8s4-3 4-12z" fill="url(#cg2)"/><circle cx="24" cy="37" r="4" fill="#C9622A"/><ellipse cx="17" cy="16" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 17 16)"/><circle cx="36" cy="11" r="6" fill="url(#cg3)"/><circle cx="34.5" cy="9.5" r="1.6" fill="#FFFFFF" opacity=".7"/></svg></span>
+    <div><p class="alert-title" data-i18n="hey">Hey! คุณนั่งผิดท่า</p><p class="alert-sub" id="bad-banner-text"></p></div>
   </div>
   <div class="net-banner" id="net-banner" role="status" hidden data-i18n="net_err">เชื่อมต่อไม่ได้ กำลังลองใหม่…</div>
 
   <main id="main" tabindex="-1">
     <!-- ================= 0. จับคู่เครื่อง ================= -->
     <section id="view-pair" class="view" aria-labelledby="h-pair" hidden>
-      <div class="card pair-card">
-        <h1 id="h-pair" data-i18n="pair_title">เชื่อมต่อกับเครื่องของคุณ</h1>
-        <p data-i18n="pair_desc">กรอกรหัสจับคู่ 10 ตัวที่สติกเกอร์บนเครื่อง หรือในหน้าเครื่อง (ตั้งค่า → บัญชี) ทำครั้งเดียวต่อเบราว์เซอร์</p>
-        <form id="pair-form" novalidate>
-          <label for="pair-code" data-i18n="pair_label">รหัสจับคู่</label>
-          <input id="pair-code" name="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
-                 inputmode="text" maxlength="14" placeholder="XXXX-XXXX-XX" aria-describedby="pair-hint pair-err" required>
-          <p class="hint" id="pair-hint"></p>
-          <p class="err" id="pair-err" role="alert"></p>
-          <button type="submit" class="btn primary block" id="btn-pair" data-i18n="pair_btn">เชื่อมต่อ</button>
-        </form>
+      <div class="pair-wrap">
+        <div class="pair-hero">
+          <div class="pair-art lp-float" aria-hidden="true"><svg viewBox="0 0 220 180" aria-hidden="true" focusable="false"><ellipse cx="128" cy="170" rx="96" ry="8" fill="#1F2430" opacity=".08"/><polygon points="58,38 72,36 70,124" fill="#E3E8F0"/><polygon points="58,38 70,124 60,126" fill="#C9D1DE"/><polygon points="60,118 128,116 126,128" fill="#E3E8F0"/><polygon points="60,118 126,128 62,130" fill="#C9D1DE"/><polygon points="66,130 72,130 70,168" fill="#AEB8C8"/><polygon points="116,128 122,128 122,168" fill="#AEB8C8"/><polygon points="128,102 216,100 216,110" fill="#E3E8F0"/><polygon points="128,102 216,110 128,112" fill="#C9D1DE"/><polygon points="204,110 212,110 210,170" fill="#AEB8C8"/><polygon points="158,46 210,44 210,90" fill="#2F3442"/><polygon points="158,46 210,90 158,92" fill="#232733"/><polygon points="163,51 205,49 205,85" fill="#3E5A9A"/><polygon points="163,51 205,85 163,87" fill="#34507F"/><polygon points="178,90 190,90 192,102" fill="#232733"/><polygon points="178,90 192,102 176,102" fill="#2F3442"/><circle cx="160" cy="62" r="3.4" fill="#2457D6"/><circle cx="160" cy="80" r="3.4" fill="#2457D6"/><path class="lp-beam" d="M157 62 L118 52" stroke="#2457D6" stroke-width="2.4" stroke-dasharray="4 4" fill="none"/><path class="lp-beam" d="M157 80 L110 90" stroke="#2457D6" stroke-width="2.4" stroke-dasharray="4 4" fill="none"/><polygon points="86,112 108,112 140,118" fill="#4A5263"/><polygon points="86,112 140,118 140,130" fill="#394050"/><polygon points="86,112 140,130 88,128" fill="#2B3140"/><polygon points="130,118 142,118 144,160" fill="#4A5263"/><polygon points="130,118 144,160 132,160" fill="#394050"/><polygon points="126,158 152,158 152,166" fill="#1E2029"/><polygon points="126,158 152,166 126,166" fill="#2B3140"/><g class="lp-body"><polygon points="82,70 112,70 97,94" fill="#5F86E6"/><polygon points="82,70 97,94 86,118" fill="#86A8F5"/><polygon points="112,70 97,94 108,118" fill="#3F65C9"/><polygon points="86,118 97,94 108,118" fill="#5F86E6"/><polygon points="92,62 102,62 104,72" fill="#DDA77E"/><polygon points="92,62 104,72 90,72" fill="#EEC39C"/><g class="lp-arm"><polygon points="104,72 114,70 124,96" fill="#86A8F5"/><polygon points="104,72 124,96 114,100" fill="#3F65C9"/><polygon points="114,96 124,94 146,96" fill="#5F86E6"/><polygon points="114,96 146,96 144,102" fill="#3F65C9"/><polygon points="144,94 152,95 150,102" fill="#EEC39C"/></g><g class="lp-head"><polygon points="97,49 97,32 112,40" fill="#F8D9BB"/><polygon points="97,49 112,40 112,58" fill="#EEC39C"/><polygon points="97,49 112,58 97,66" fill="#DDA77E"/><polygon points="97,49 97,66 82,58" fill="#EEC39C"/><polygon points="97,49 82,58 82,40" fill="#F8D9BB"/><polygon points="97,49 82,40 97,32" fill="#F8D9BB"/><polygon points="80,44 97,28 98,40" fill="#3A3D4A"/><polygon points="97,28 114,42 98,40" fill="#2A2D38"/><polygon points="80,44 98,40 84,52" fill="#1E2029"/><circle cx="104" cy="50" r="2.2" fill="#1E2029"/><path d="M101 57 q5 3.5 9 -1" stroke="#1E2029" stroke-width="2" fill="none" stroke-linecap="round"/></g></g></svg></div>
+        </div>
+        <div class="card pair-card">
+          <h1 id="h-pair" data-i18n="pair_title">เชื่อมต่อกับเครื่องของคุณ</h1>
+          <p data-i18n="pair_desc">กรอกรหัสจับคู่ 10 ตัวที่สติกเกอร์บนเครื่อง หรือในหน้าเครื่อง (ตั้งค่า → บัญชี) ทำครั้งเดียวต่อเบราว์เซอร์</p>
+          <ol class="pair-steps">
+            <li><span class="step-n" aria-hidden="true">1</span><span data-i18n="pair_s1">เปิดเครื่องบนโต๊ะ ต่อ Wi-Fi</span></li>
+            <li><span class="step-n" aria-hidden="true">2</span><span data-i18n="pair_s2">ดูรหัส 10 ตัวในหน้าเครื่อง</span></li>
+            <li><span class="step-n" aria-hidden="true">3</span><span data-i18n="pair_s3">กรอกรหัสด้านล่าง ทำครั้งเดียว</span></li>
+          </ol>
+          <form id="pair-form" novalidate>
+            <label for="pair-code" data-i18n="pair_label">รหัสจับคู่</label>
+            <input id="pair-code" name="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"
+                   inputmode="text" maxlength="14" placeholder="XXXX-XXXX-XX" aria-describedby="pair-hint pair-err" required>
+            <p class="hint" id="pair-hint"></p>
+            <p class="err" id="pair-err" role="alert"></p>
+            <button type="submit" class="btn dark block" id="btn-pair" data-i18n="pair_btn">เชื่อมต่อ</button>
+          </form>
+          <div class="pair-lang"><div class="seg small" role="group" aria-label="Language / ภาษา"><button type="button" class="seg-btn" data-lang="th" aria-pressed="true">ไทย</button><button type="button" class="seg-btn" data-lang="en" aria-pressed="false">English</button></div></div>
+        </div>
+        <p class="center"><a href="hr/" data-i18n="hr_link">สำหรับฝ่ายบุคคล (HR) →</a></p>
       </div>
-      <p class="center"><a href="hr/" data-i18n="hr_link">สำหรับฝ่ายบุคคล (HR) →</a></p>
     </section>
 
-    <!-- ================= 1. หน้าแรก ================= -->
+    <!-- ================= 1. วันนี้ ================= -->
     <section id="view-home" class="view" aria-labelledby="h-home" hidden>
-      <h1 id="h-home" class="visually-hidden" data-i18n="nav_home">หน้าแรก</h1>
-
-      <article class="card status-card" id="status-card" aria-labelledby="h-status">
-        <h2 id="h-status" class="visually-hidden" data-i18n="status_h">สถานะท่านั่ง</h2>
-        <div class="status-head">
-          <span class="bell" aria-hidden="true">🔔</span>
-          <p class="posture-name" id="posture-name">—</p>
-          <span class="badge" id="posture-badge"></span>
-        </div>
-        <p class="visually-hidden" id="posture-live" aria-live="polite"></p>
-        <div class="status-body">
-          <div class="dist">
-            <p class="label" data-i18n="dist_h">ห่างหน้าจอ</p>
-            <p class="dist-val"><span id="dist-val">—</span> <span data-i18n="cm">ซม.</span></p>
-            <p class="chip" id="dist-chip"></p>
+      <div class="view-head"><p class="greet" id="greet"></p><h1 id="h-home" data-i18n="nav_home">วันนี้</h1></div>
+      <div class="home-grid">
+        <article class="hero" id="status-card" aria-labelledby="h-now">
+          <div class="hero-top">
+            <div class="hero-text">
+              <p class="eyebrow" id="h-now" data-i18n="now">ตอนนี้</p>
+              <h2 class="posture-name" id="posture-name">—</h2>
+              <p class="posture-sub" id="posture-sub"></p>
+              <span class="badge" id="posture-badge"></span>
+            </div>
+            <figure class="hero-art">
+              <div class="lp-float" id="pose-svg" role="img" aria-label=""></div>
+              <figcaption id="pose-cap" class="visually-hidden"></figcaption>
+            </figure>
           </div>
-          <figure class="figure">
-            <svg id="pose-svg" viewBox="0 0 160 140" role="img" aria-labelledby="pose-cap"></svg>
-            <figcaption id="pose-cap" class="pose-cap">—</figcaption>
-          </figure>
-        </div>
-        <dl class="facts">
-          <div><dt data-i18n="bad_for">ผิดท่าต่อเนื่อง</dt><dd id="f-bad">—</dd></div>
-          <div><dt data-i18n="sit_for">นั่งต่อเนื่อง</dt><dd id="f-sit">—</dd></div>
-          <div><dt data-i18n="judged">ตัดสินโดย</dt><dd id="f-src">—</dd></div>
-        </dl>
-      </article>
+          <p class="visually-hidden" id="posture-live" aria-live="polite"></p>
+          <dl class="mini-grid">
+            <div class="mini"><dt data-i18n="dist_h">ห่างหน้าจอ</dt><dd class="num"><span id="dist-val">—</span><span class="unit" data-i18n="cm">ซม.</span></dd><dd class="chip" id="dist-chip"></dd></div>
+            <div class="mini"><dt data-i18n="judged">ตัดสินโดย</dt><dd class="txt" id="f-src">—</dd><dd class="note" data-i18n="every5">อัปเดตทุก 5 วินาที</dd></div>
+            <div class="mini"><dt data-i18n="bad_for">ผิดท่าต่อเนื่อง</dt><dd class="txt" id="f-bad">—</dd></div>
+            <div class="mini"><dt data-i18n="sit_for">นั่งต่อเนื่อง</dt><dd class="txt" id="f-sit">—</dd></div>
+          </dl>
+        </article>
 
-      <article class="card warn" id="calib-card" hidden aria-labelledby="h-calib">
-        <h2 id="h-calib" data-i18n="calib_h">ยังไม่ได้ปรับเทียบท่า</h2>
-        <p data-i18n="calib_desc">นั่งหลังชิดพนัก ตัวตรง มองจอตรงๆ แล้วกดปุ่ม เครื่องจะวัดค้างไว้ 10 วินาที แล้วปี๊บเมื่อเสร็จ ultrasonic จึงช่วยตัดสินได้</p>
-        <button type="button" class="btn primary" data-cmd="calibrate" data-i18n="calib_btn">ปรับเทียบท่า</button>
-      </article>
+        <article class="card relax-card" aria-labelledby="h-relax">
+          <div class="card-head">
+            <h2 id="h-relax" data-i18n="relax_h">มาเริ่ม relax กัน!!</h2>
+            <button type="button" class="i-btn" id="btn-relax-info" aria-haspopup="dialog" data-i18n-aria="relax_info" aria-label="เราจะ relax ยังไง">i</button>
+          </div>
+          <div class="relax-row">
+            <div class="ring">
+              <svg viewBox="0 0 84 84" aria-hidden="true" focusable="false"><circle class="ring-bg" cx="42" cy="42" r="34"/><circle class="ring-fg" id="relax-ring" cx="42" cy="42" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6" transform="rotate(-90 42 42)"/></svg>
+              <span class="ring-ic"><svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><path d="M3 24s8-13 21-13 21 13 21 13-8 13-21 13S3 24 3 24z" fill="url(#cg4)"/><circle cx="24" cy="24" r="8" fill="#FFFFFF"/><circle cx="24" cy="24" r="4.5" fill="#1F2430"/><circle cx="26" cy="22" r="1.6" fill="#FFFFFF"/><ellipse cx="14" cy="18" rx="5" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 14 18)"/></svg></span>
+            </div>
+            <div class="relax-text">
+              <p class="timer" id="relax-timer" role="timer" aria-live="off">20:00</p>
+              <p class="relax-rule" data-i18n="relax_rule">ทุก 20 นาที มองไกล 6 เมตร 20 วินาที</p>
+            </div>
+          </div>
+          <div class="relax-btns">
+            <button type="button" class="pill-btn" id="btn-relax-toggle"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path id="relax-icon" d="M8 5v14l11-7z"/></svg><span id="relax-toggle-text" data-i18n="relax_play">เริ่มนับเวลา</span></button>
+            <button type="button" class="ring-btn" data-cmd="relax_reset" data-i18n-aria="relax_reset" aria-label="เริ่มนับใหม่"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+          </div>
+          <p class="relax-state" id="relax-state" aria-live="polite"></p>
+        </article>
 
-      <article class="card relax-card" aria-labelledby="h-relax">
-        <div class="card-head">
-          <h2 id="h-relax" data-i18n="relax_h">มาเริ่ม relax กัน!!</h2>
-          <button type="button" class="icon-btn small" id="btn-relax-info" aria-haspopup="dialog" data-i18n-aria="relax_info" aria-label="เราจะ relax ยังไง">i</button>
-        </div>
-        <p class="hint" data-i18n="relax_rule">กฎ 20-20-20: ทุก 20 นาที มองไกล 6 เมตร นาน 20 วินาที</p>
-        <div class="relax-row">
-          <p class="timer" id="relax-timer" role="timer" aria-live="off">20:00</p>
-          <button type="button" class="round-btn" id="btn-relax-toggle" data-i18n-aria="relax_pause" aria-label="หยุด">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path id="relax-icon" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
-          </button>
-          <button type="button" class="round-btn" data-cmd="relax_reset" data-i18n-aria="relax_reset" aria-label="เริ่มนับใหม่">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
-          </button>
-        </div>
-        <p class="hint" id="relax-state" aria-live="polite"></p>
-      </article>
+        <article class="card warn-card" id="calib-card" hidden aria-labelledby="h-calib">
+          <div class="warn-head"><span class="tile" aria-hidden="true"><svg width="35" height="35" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient><linearGradient id="cg6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><circle cx="23" cy="24" r="17" fill="url(#cg5)"/><circle cx="23" cy="24" r="11" fill="#FFFFFF" opacity=".9"/><circle cx="23" cy="24" r="6" fill="url(#cg5)"/><ellipse cx="15" cy="14" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 15 14)"/><path d="M24 23l15-15" stroke="#C9622A" stroke-width="3.4" stroke-linecap="round"/><path d="M35 6l6-1-1 6z" fill="url(#cg6)"/></svg></span><h2 id="h-calib" data-i18n="calib_h">ยังไม่ได้ปรับเทียบท่า</h2></div>
+          <p data-i18n="calib_desc">นั่งหลังชิดพนัก ตัวตรง มองจอตรงๆ แล้วกดปุ่ม</p>
+          <button type="button" class="btn dark" data-cmd="calibrate" data-i18n="calib_btn">ปรับเทียบท่า</button>
+        </article>
 
+        <article class="card path-card" aria-labelledby="h-path">
+          <div class="card-head">
+            <h2 id="h-path" data-i18n="path_h">เส้นทางท่านั่งวันนี้</h2>
+            <span class="streak" id="streak" hidden><svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset=".55" stop-color="#F5B12E"/><stop offset="1" stop-color="#C9850F"/></linearGradient></defs><path d="M24 4l6 12.5 13.5 2-10 9.5 2.5 13.5L24 35l-12 6.5 2.5-13.5-10-9.5 13.5-2z" fill="url(#cg7)" stroke="#C9850F" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="20" cy="15" rx="4" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 20 15)"/></svg><span id="streak-text"></span></span>
+          </div>
+          <div class="path-big">
+            <p class="big-pct" id="today-pct">—</p>
+            <p class="path-note"><span id="today-note"></span><br><span class="delta" id="today-delta"></span></p>
+          </div>
+          <div class="timeline" id="timeline" role="img" aria-label=""></div>
+          <div class="tl-axis" id="tl-axis" aria-hidden="true"></div>
+          <div class="legend">
+            <span><i class="sw-good" aria-hidden="true"></i><span data-i18n="good_time">ท่าถูก</span></span>
+            <span><i class="sw-bad" aria-hidden="true"></i><span data-i18n="bad_time">ท่าผิด</span></span>
+            <span><i class="sw-idle" aria-hidden="true"></i><span data-i18n="idle_time">ไม่ได้นั่ง / ลุกพัก</span></span>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- ================= 2. สถิติ ================= -->
     <section id="view-stats" class="view" aria-labelledby="h-stats" hidden>
-      <h1 id="h-stats" data-i18n="nav_stats">สถิติ</h1>
-      <div class="seg" role="group" data-i18n-aria="range" aria-label="ช่วงเวลา">
+      <div class="view-head"><p class="greet" id="stats-range"></p><h1 id="h-stats" data-i18n="nav_stats">สถิติ</h1></div>
+      <div class="seg big" role="group" data-i18n-aria="range" aria-label="ช่วงเวลา">
         <button type="button" class="seg-btn" id="seg-day" aria-pressed="false" data-i18n="daily">รายวัน</button>
         <button type="button" class="seg-btn" id="seg-week" aria-pressed="true" data-i18n="weekly">รายสัปดาห์</button>
       </div>
+      <div class="stats-grid">
+        <article class="hero summary" aria-labelledby="h-sum">
+          <h2 class="eyebrow" id="h-sum" data-i18n="sum_h">ท่าถูกเฉลี่ย 7 วัน</h2>
+          <div class="sum-top"><p class="sum-pct" id="sum-pct">—</p><span class="pill" id="sum-delta" hidden></span></div>
+          <dl class="mini-grid three">
+            <div class="mini"><dt data-i18n="sum_sit">นั่งรวม</dt><dd class="txt" id="sum-sit">—</dd></div>
+            <div class="mini"><dt data-i18n="sum_alerts">ถูกเตือน</dt><dd class="txt" id="sum-alerts">—</dd></div>
+            <div class="mini"><dt data-i18n="sum_breaks">ลุกพัก</dt><dd class="txt" id="sum-breaks">—</dd></div>
+          </dl>
+        </article>
 
-      <article class="card" aria-labelledby="h-chart">
-        <h2 id="h-chart">—</h2>
-        <div class="legend">
-          <span><i class="sw good" aria-hidden="true"></i><span data-i18n="good_time">ท่าถูก</span></span>
-          <span><i class="sw bad" aria-hidden="true"></i><span data-i18n="bad_time">ท่าผิด</span></span>
-        </div>
-        <div class="chart-wrap" id="chart"></div>
-        <div class="day-btns" id="day-btns"></div>
-        <p class="tip" id="chart-tip" role="status" aria-live="polite"></p>
-        <details class="table-toggle">
-          <summary data-i18n="as_table">แสดงเป็นตาราง</summary>
-          <div class="table-wrap" id="chart-table"></div>
-        </details>
-      </article>
+        <article class="card chart-card" aria-labelledby="h-chart">
+          <div class="card-head"><h2 id="h-chart">—</h2></div>
+          <p class="tip" id="chart-tip" role="status" aria-live="polite"></p>
+          <div class="chart-wrap" id="chart"></div>
+          <div class="day-btns" id="day-btns"></div>
+          <div class="legend">
+            <span><i class="sw-good" aria-hidden="true"></i><span data-i18n="good_time">ท่าถูก</span></span>
+            <span><i class="sw-bad" aria-hidden="true"></i><span data-i18n="bad_time">ท่าผิด</span></span>
+          </div>
+          <details class="table-toggle">
+            <summary data-i18n="as_table">แสดงเป็นตาราง</summary>
+            <div class="table-wrap" id="chart-table"></div>
+          </details>
+        </article>
 
-      <article class="card" aria-labelledby="h-total">
-        <h2 id="h-total" data-i18n="total_h">เวลานั่งทั้งหมด/วัน</h2>
-        <ul class="day-list" id="day-list"></ul>
-      </article>
+        <article class="card insight" aria-labelledby="h-ins">
+          <span class="tile" aria-hidden="true"><svg width="35" height="35" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset=".55" stop-color="#F5B12E"/><stop offset="1" stop-color="#C9850F"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M24 4a14 14 0 0 0-8 25.5V34h16v-4.5A14 14 0 0 0 24 4z" fill="url(#cg8)"/><rect x="17" y="35" width="14" height="4" rx="2" fill="#8C95A8"/><rect x="19" y="40" width="10" height="3.5" rx="1.75" fill="#6B7487"/><ellipse cx="17" cy="12" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 17 12)"/><path d="M24 14v10M20 20l4 4 4-4" stroke="#FFFFFF" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div><h2 id="h-ins" data-i18n="ins_h">ข้อสังเกต</h2><p id="insight-text"></p></div>
+        </article>
+
+        <article class="card" aria-labelledby="h-total">
+          <h2 id="h-total" data-i18n="total_h">เวลานั่งทั้งหมด/วัน</h2>
+          <ul class="day-list" id="day-list"></ul>
+        </article>
+      </div>
     </section>
 
     <!-- ================= 3. ตั้งค่า ================= -->
     <section id="view-settings" class="view" aria-labelledby="h-settings" hidden>
-      <h1 id="h-settings" data-i18n="nav_settings">ตั้งค่า</h1>
-
-      <article class="card" aria-labelledby="h-app">
+      <div class="view-head"><p class="greet" data-i18n="settings_greet">ปรับให้เหมาะกับคุณ</p><h1 id="h-settings" data-i18n="nav_settings">ตั้งค่า</h1></div>
+      <div class="settings-grid">
+      <article class="card group" aria-labelledby="h-app">
         <h2 id="h-app" data-i18n="app_h">แอปนี้</h2>
         <div class="row">
-          <span class="row-label" id="lbl-lang"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15 15 0 0 0-1.3-3.9A8 8 0 0 1 18.9 8zM12 4a13 13 0 0 1 1.9 4h-3.8A13 13 0 0 1 12 4zM4.3 14a8 8 0 0 1 0-4h3.4a16 16 0 0 0 0 4zm.8 2h3a15 15 0 0 0 1.3 3.9A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.3-3.9A15 15 0 0 0 8.1 8zM12 20a13 13 0 0 1-1.9-4h3.8A13 13 0 0 1 12 20zm2.3-6H9.7a14 14 0 0 1 0-4h4.6a14 14 0 0 1 0 4zm.3 5.9a15 15 0 0 0 1.3-3.9h3a8 8 0 0 1-4.3 3.9zm1.7-5.9a16 16 0 0 0 0-4h3.4a8 8 0 0 1 0 4z"/></svg>Language</span>
-          <div class="seg small" role="group" aria-labelledby="lbl-lang">
-            <button type="button" class="seg-btn" data-lang="th" aria-pressed="true">TH</button>
-            <button type="button" class="seg-btn" data-lang="en" aria-pressed="false">EN</button>
-          </div>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg9" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient><linearGradient id="cg10" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="4" y="7" width="26" height="20" rx="9" fill="url(#cg9)"/><path d="M10 25l-3 7 8-6z" fill="#6449C9"/><ellipse cx="12" cy="11" rx="5" ry="2.2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 12 11)"/><text x="17" y="22" font-size="13" font-weight="700" text-anchor="middle" fill="#FFFFFF" font-family="Anuphan,sans-serif">ก</text><rect x="18" y="18" width="26" height="20" rx="9" fill="url(#cg10)"/><path d="M38 36l3 6-8-5z" fill="#2A4FB8"/><ellipse cx="26" cy="22" rx="5" ry="2.2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 26 22)"/><text x="31" y="33" font-size="13" font-weight="700" text-anchor="middle" fill="#FFFFFF" font-family="Anuphan,sans-serif">A</text></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-lang">Language</span></span>
+          <div class="seg small" role="group" aria-labelledby="lbl-lang"><button type="button" class="seg-btn" data-lang="th" aria-pressed="true">TH</button><button type="button" class="seg-btn" data-lang="en" aria-pressed="false">EN</button></div>
         </div>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17.3V21h3.7L17.8 9.9l-3.7-3.7zM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8 3.7 3.7z"/></svg><span id="lbl-font" data-i18n="font">ขนาดตัวอักษร</span></span>
-          <div class="seg small" role="group" aria-labelledby="lbl-font">
-            <button type="button" class="seg-btn" data-font="1" aria-pressed="true" data-i18n="font_n">ปกติ</button>
-            <button type="button" class="seg-btn" data-font="1.15" aria-pressed="false" data-i18n="font_l">ใหญ่</button>
-            <button type="button" class="seg-btn" data-font="1.3" aria-pressed="false" data-i18n="font_xl">ใหญ่มาก</button>
-          </div>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="5" y="6" width="38" height="34" rx="12" fill="url(#cg11)"/><ellipse cx="14" cy="11" rx="7" ry="2.6" fill="#FFFFFF" opacity=".55" transform="rotate(-30 14 11)"/><text x="18" y="33" font-size="22" font-weight="700" text-anchor="middle" fill="#FFFFFF" font-family="Anuphan,sans-serif">A</text><text x="32" y="33" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF" opacity=".9" font-family="Anuphan,sans-serif">a</text></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-font" data-i18n="font">ขนาดตัวอักษร</span></span>
+          <div class="seg small" role="group" aria-labelledby="lbl-font"><button type="button" class="seg-btn" data-font="1" aria-pressed="true" data-i18n="font_n">ปกติ</button><button type="button" class="seg-btn" data-font="1.15" aria-pressed="false" data-i18n="font_l">ใหญ่</button><button type="button" class="seg-btn" data-font="1.3" aria-pressed="false" data-i18n="font_xl">ใหญ่มาก</button></div>
         </div>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM1 11h3v2H1zm19 0h3v2h-3zM4.2 5.6l1.4-1.4 2.1 2.1-1.4 1.4zm12.1 12.1 1.4-1.4 2.1 2.1-1.4 1.4zM4.2 18.4l2.1-2.1 1.4 1.4-2.1 2.1zM16.3 6.3l2.1-2.1 1.4 1.4-2.1 2.1z"/></svg><span id="lbl-theme" data-i18n="theme">ธีม</span></span>
-          <div class="seg small" role="group" aria-labelledby="lbl-theme">
-            <button type="button" class="seg-btn" data-theme-btn="light" aria-pressed="true" data-i18n="light">สว่าง</button>
-            <button type="button" class="seg-btn" data-theme-btn="dark" aria-pressed="false" data-i18n="dark">มืด</button>
-          </div>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg12" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset=".55" stop-color="#F5B12E"/><stop offset="1" stop-color="#C9850F"/></linearGradient><linearGradient id="cg13" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><circle cx="24" cy="23" r="16" fill="url(#cg12)"/><path d="M24 7a16 16 0 0 1 0 32z" fill="url(#cg13)"/><path d="M31 15a7 7 0 1 0 5 11 8.5 8.5 0 0 1-5-11z" fill="#FFFFFF" opacity=".95"/><ellipse cx="15" cy="14" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 15 14)"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-theme" data-i18n="theme">ธีม</span></span>
+          <div class="seg small" role="group" aria-labelledby="lbl-theme"><button type="button" class="seg-btn" data-theme-btn="light" aria-pressed="true" data-i18n="light">สว่าง</button><button type="button" class="seg-btn" data-theme-btn="dark" aria-pressed="false" data-i18n="dark">มืด</button></div>
         </div>
       </article>
 
       <form id="dev-form" class="settings-form" novalidate>
-      <article class="card" aria-labelledby="h-ch">
+      <article class="card group" aria-labelledby="h-ch">
         <h2 id="h-ch" data-i18n="ch_h">ช่องทางแจ้งเตือน</h2>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zm4 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm8 0a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg><span id="lbl-muted" data-i18n="sound_on">เสียงเตือนที่เครื่อง</span></span>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg14" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient><linearGradient id="cg15" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="4" y="12" width="40" height="24" rx="8" fill="url(#cg14)"/><ellipse cx="12" cy="16" rx="5" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 12 16)"/><circle cx="16" cy="24" r="7" fill="#FFFFFF"/><circle cx="16" cy="24" r="3.4" fill="#2A4FB8"/><circle cx="32" cy="24" r="7" fill="#FFFFFF"/><circle cx="32" cy="24" r="3.4" fill="#2A4FB8"/><path d="M30 8a9 9 0 0 1 9 4M33 4a14 14 0 0 1 10 6" stroke="url(#cg15)" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-muted" data-i18n="sound_on">เสียงเตือนที่เครื่อง</span><span class="sub"><span data-i18n="sound_sub">buzzer ดังเมื่อผิดท่าต่อเนื่อง</span></span></span>
           <button type="button" class="switch" id="sw-sound" role="switch" aria-checked="true" aria-labelledby="lbl-muted"><span aria-hidden="true"></span></button>
         </div>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22a2.5 2.5 0 0 0 2.5-2.5h-5A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 0 0-5.5-6.8V3a1.5 1.5 0 0 0-3 0v1.2A7 7 0 0 0 5 11v5l-2 2v1h18v-1z"/></svg><span id="lbl-noti" data-i18n="web_noti">แจ้งเตือนบนเว็บ</span></span>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg16" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient><linearGradient id="cg17" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M12 21a12 12 0 0 1 24 0c0 9 4 12 4 12H8s4-3 4-12z" fill="url(#cg16)"/><circle cx="24" cy="37" r="4" fill="#C9622A"/><ellipse cx="17" cy="16" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 17 16)"/><circle cx="36" cy="11" r="6" fill="url(#cg17)"/><circle cx="34.5" cy="9.5" r="1.6" fill="#FFFFFF" opacity=".7"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-noti" data-i18n="web_noti">แจ้งเตือนบนเว็บ</span><span class="sub"><span id="noti-hint" data-i18n="noti_now">มีผลทันทีบนเบราว์เซอร์นี้</span></span></span>
           <button type="button" class="switch" id="sw-noti" role="switch" aria-checked="false" aria-labelledby="lbl-noti" aria-describedby="noti-hint noti-ios"><span aria-hidden="true"></span></button>
         </div>
-        <p class="hint" id="noti-hint" data-i18n="noti_now">มีผลทันทีบนเบราว์เซอร์นี้ · เด้งเฉพาะตอนเปิดหน้านี้ไว้</p>
-        <p class="hint warn-text" id="noti-ios" data-i18n="noti_ios" hidden></p>
+        <p class="warn-text" id="noti-ios" data-i18n="noti_ios" hidden></p>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v13h10V5zm5 14.2a1 1 0 1 0 0 .1z"/></svg><span id="lbl-push" data-i18n="push">แจ้งเตือนเข้ามือถือ (ntfy)</span></span>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg18" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient><linearGradient id="cg19" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="13" y="4" width="22" height="38" rx="7" fill="url(#cg18)"/><rect x="16.5" y="9" width="15" height="23" rx="3" fill="#FFFFFF" opacity=".9"/><rect x="19" y="13" width="10" height="3" rx="1.5" fill="#2A4FB8" opacity=".5"/><rect x="19" y="19" width="7" height="3" rx="1.5" fill="#2A4FB8" opacity=".35"/><ellipse cx="18" cy="8" rx="3.5" ry="1.6" fill="#FFFFFF" opacity=".55" transform="rotate(-30 18 8)"/><circle cx="35" cy="9" r="6" fill="url(#cg19)"/><circle cx="33.6" cy="7.6" r="1.6" fill="#FFFFFF" opacity=".7"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-push" data-i18n="push">แจ้งเตือนเข้ามือถือ (ntfy)</span><span class="sub"><span id="push-hint"></span></span></span>
           <button type="button" class="switch" id="sw-push" role="switch" aria-checked="false" aria-labelledby="lbl-push" aria-describedby="push-hint"><span aria-hidden="true"></span></button>
         </div>
-        <p class="hint" id="push-hint"></p>
       </article>
 
-      <article class="card" aria-labelledby="h-rule">
+      <article class="card group" aria-labelledby="h-rule">
         <h2 id="h-rule" data-i18n="rule_h">เกณฑ์ท่านั่ง</h2>
-        <div class="field">
-            <label for="in-bad" data-i18n="bad_seconds">เตือนเมื่อผิดท่าต่อเนื่อง (วินาที)</label>
-          <input id="in-bad" type="number" inputmode="numeric" min="5" max="600" step="1" aria-describedby="err-bad">
-          <p class="err" id="err-bad"></p>
+        <div class="row field-row">
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg29" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg30" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="19" y="3" width="10" height="6" rx="3" fill="#1F8A69"/><circle cx="24" cy="26" r="16" fill="url(#cg29)"/><circle cx="24" cy="26" r="11" fill="#FFFFFF" opacity=".92"/><path d="M24 26V17a9 9 0 0 1 9 9z" fill="url(#cg30)"/><circle cx="24" cy="26" r="2.4" fill="#1F8A69"/><ellipse cx="15" cy="17" rx="4.5" ry="2.2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 15 17)"/></svg></span>
+          <span class="row-text"><label class="row-title" for="in-bad" data-i18n="bad_seconds">เตือนเมื่อผิดท่าต่อเนื่อง (วินาที)</label><span class="err" id="err-bad"></span></span>
+          <input id="in-bad" class="num-in" type="number" inputmode="numeric" min="5" max="600" step="1" aria-describedby="err-bad">
         </div>
-        <div class="field">
-          <label for="in-sit" data-i18n="sit_minutes">เตือนให้ลุกพักทุก (นาที)</label>
-          <input id="in-sit" type="number" inputmode="numeric" min="10" max="180" step="1" aria-describedby="err-sit">
-          <p class="err" id="err-sit"></p>
+        <div class="row field-row">
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg31" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg32" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><circle cx="24" cy="24" r="18" fill="url(#cg31)"/><ellipse cx="16" cy="14" rx="6" ry="2.6" fill="#FFFFFF" opacity=".55" transform="rotate(-30 16 14)"/><circle cx="26" cy="12.5" r="3.6" fill="#FFFFFF"/><path d="M23 18l-5 6 3 2 3-3 1.5 5-4 9h3.5l3.5-7 3 7h3.5l-4-11-1.5-7z" fill="#FFFFFF"/></svg></span>
+          <span class="row-text"><label class="row-title" for="in-sit" data-i18n="sit_minutes">เตือนให้ลุกพักทุก (นาที)</label><span class="err" id="err-sit"></span></span>
+          <input id="in-sit" class="num-in" type="number" inputmode="numeric" min="10" max="180" step="1" aria-describedby="err-sit">
         </div>
-        <fieldset class="field">
-          <legend data-i18n="screen_range">ระยะจอที่เหมาะ (ซม.) · OSHA แนะนำ 50–100</legend>
-          <div class="pair-inputs">
-            <label for="in-smin" data-i18n="min">ใกล้สุด</label>
-            <input id="in-smin" type="number" inputmode="numeric" min="30" max="90" step="1" aria-describedby="err-screen">
-            <label for="in-smax" data-i18n="max">ไกลสุด</label>
-            <input id="in-smax" type="number" inputmode="numeric" min="50" max="150" step="1" aria-describedby="err-screen">
-          </div>
-          <p class="err" id="err-screen"></p>
+        <fieldset class="row field-row screen-row">
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg21" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient><linearGradient id="cg22" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="18" y="6" width="26" height="19" rx="5" fill="url(#cg21)"/><rect x="21" y="9" width="20" height="13" rx="2.5" fill="#FFFFFF" opacity=".88"/><rect x="28" y="25" width="6" height="5" fill="#2A4FB8"/><circle cx="9" cy="14" r="6" fill="url(#cg22)"/><ellipse cx="23" cy="9" rx="4" ry="1.8" fill="#FFFFFF" opacity=".55" transform="rotate(-30 23 9)"/><path d="M8 36h32" stroke="#2A4FB8" stroke-width="3" stroke-linecap="round"/><path d="M12 32l-4 4 4 4M36 32l4 4-4 4" stroke="#2A4FB8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="row-text"><legend class="row-title" data-i18n="screen_range">ระยะจอที่เหมาะ (ซม.)</legend><span class="sub" data-i18n="screen_sub">OSHA แนะนำ 50–100</span><span class="err" id="err-screen"></span></span>
+          <span class="pair-inputs">
+            <label for="in-smin" class="visually-hidden" data-i18n="min">ใกล้สุด</label>
+            <input id="in-smin" class="num-in" type="number" inputmode="numeric" min="30" max="90" step="1" aria-describedby="err-screen">
+            <span aria-hidden="true">–</span>
+            <label for="in-smax" class="visually-hidden" data-i18n="max">ไกลสุด</label>
+            <input id="in-smax" class="num-in" type="number" inputmode="numeric" min="50" max="150" step="1" aria-describedby="err-screen">
+          </span>
         </fieldset>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5C6.5 5 2.7 9.2 1.5 12c1.2 2.8 5 7 10.5 7s9.3-4.2 10.5-7C21.3 9.2 17.5 5 12 5zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg><span id="lbl-eye" data-i18n="eye_auto">พักสายตา 20-20-20 อัตโนมัติ</span></span>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg20" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><path d="M3 24s8-13 21-13 21 13 21 13-8 13-21 13S3 24 3 24z" fill="url(#cg20)"/><circle cx="24" cy="24" r="8" fill="#FFFFFF"/><circle cx="24" cy="24" r="4.5" fill="#1F2430"/><circle cx="26" cy="22" r="1.6" fill="#FFFFFF"/><ellipse cx="14" cy="18" rx="5" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 14 18)"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-eye" data-i18n="eye_auto">พักสายตา 20-20-20 อัตโนมัติ</span></span>
           <button type="button" class="switch" id="sw-eye" role="switch" aria-checked="true" aria-labelledby="lbl-eye"><span aria-hidden="true"></span></button>
         </div>
-        <button type="submit" class="btn primary" id="btn-save" data-i18n="save">บันทึก</button>
-        <p class="ok-msg" id="save-msg" role="status" aria-live="polite"></p>
+        <div class="save-row"><button type="submit" class="btn dark" id="btn-save" data-i18n="save">บันทึก</button><p class="ok-msg" id="save-msg" role="status" aria-live="polite"></p></div>
       </article>
       </form>
 
-      <article class="card" aria-labelledby="h-desk">
+      <article class="card group" aria-labelledby="h-desk">
         <h2 id="h-desk" data-i18n="desk_h">เครื่องบนโต๊ะ</h2>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm0 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg><span><span class="row-title" data-i18n="calib_btn">ปรับเทียบท่า</span><span class="sub" id="cal-sub" data-i18n="calib_row">นั่งหลังชิดพนัก ตัวตรง แล้วกด เครื่องวัด 10 วินาที</span></span></span>
-          <button type="button" class="btn primary" data-cmd="calibrate" aria-describedby="cal-sub"><span data-i18n="start">เริ่ม</span><span class="visually-hidden" data-i18n="calib_btn">ปรับเทียบท่า</span></button>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg23" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient><linearGradient id="cg24" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><circle cx="23" cy="24" r="17" fill="url(#cg23)"/><circle cx="23" cy="24" r="11" fill="#FFFFFF" opacity=".9"/><circle cx="23" cy="24" r="6" fill="url(#cg23)"/><ellipse cx="15" cy="14" rx="5" ry="2.4" fill="#FFFFFF" opacity=".55" transform="rotate(-30 15 14)"/><path d="M24 23l15-15" stroke="#C9622A" stroke-width="3.4" stroke-linecap="round"/><path d="M35 6l6-1-1 6z" fill="url(#cg24)"/></svg></span>
+          <span class="row-text"><span class="row-title" data-i18n="calib_btn">ปรับเทียบท่า</span><span class="sub"><span id="cal-sub" data-i18n="calib_row">นั่งหลังชิดพนัก ตัวตรง แล้วกด</span></span></span>
+          <button type="button" class="btn dark sm" data-cmd="calibrate" aria-describedby="cal-sub"><span data-i18n="start">เริ่ม</span><span class="visually-hidden" data-i18n="calib_btn">ปรับเทียบท่า</span></button>
         </div>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9v6h4l5 4V5L7 9zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1A9 9 0 0 0 14 3.2z"/></svg><span><span class="row-title" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span><span class="sub" id="test-sub" data-i18n="test_row">เครื่องจะปี๊บภายใน ~10 วินาที</span></span></span>
-          <button type="button" class="btn" data-cmd="test_buzzer" aria-describedby="test-sub"><span data-i18n="test">ทดสอบ</span><span class="visually-hidden" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span></button>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg25" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M6 18h7l10-8v26l-10-8H6z" fill="url(#cg25)"/><ellipse cx="14" cy="17" rx="4" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 14 17)"/><path d="M29 17a8 8 0 0 1 0 12" stroke="#33B98F" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M34 12a15 15 0 0 1 0 22" stroke="#9BEBD2" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span>
+          <span class="row-text"><span class="row-title" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span><span class="sub"><span id="test-sub" data-i18n="test_row">เครื่องจะปี๊บภายใน ~10 วินาที</span></span></span>
+          <button type="button" class="btn sm" data-cmd="test_buzzer" aria-describedby="test-sub"><span data-i18n="test">ทดสอบ</span><span class="visually-hidden" data-i18n="test_buzzer">ทดสอบเสียงเครื่อง</span></button>
         </div>
       </article>
 
-      <article class="card" aria-labelledby="h-rep">
+      <article class="card group" aria-labelledby="h-rep">
         <h2 id="h-rep" data-i18n="report_h">รายงาน</h2>
         <div class="row">
-          <span class="row-label"><svg class="row-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2zm3 7a1.5 1.5 0 1 0 0 .1zm5 0a1.5 1.5 0 1 0 0 .1zm5 0a1.5 1.5 0 1 0 0 .1z"/></svg><span id="lbl-report" data-i18n="report_send">ส่งออกสถิติ</span></span>
-          <div class="btn-row tight" role="group" aria-labelledby="lbl-report">
-            <a class="btn" id="btn-mail" href="mailto:" data-i18n-aria="mail" aria-label="ส่งรายงานทางอีเมล"><svg class="row-ic m0" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18v14H3zm2 2v.5l7 4.5 7-4.5V7zm0 2.9V17h14V9.9l-7 4.5z"/></svg></a>
-            <button type="button" class="btn" id="btn-csv" data-i18n="csv">CSV</button>
-          </div>
+          <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg27" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg28" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M10 4h19l10 10v28a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z" fill="url(#cg27)"/><path d="M29 4v10h10z" fill="#1F8A69"/><ellipse cx="14" cy="10" rx="4" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 14 10)"/><rect x="12" y="19" width="16" height="3" rx="1.5" fill="#FFFFFF" opacity=".9"/><circle cx="31" cy="34" r="8" fill="url(#cg28)"/><path d="M31 30v7M28 34.5l3 3 3-3" stroke="#FFFFFF" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="row-text"><span class="row-title" id="lbl-report" data-i18n="report_send">ส่งออกสถิติ</span></span>
+          <span class="btn-row tight" role="group" aria-labelledby="lbl-report"><a class="btn sm icon-only" id="btn-mail" href="mailto:" data-i18n-aria="mail" aria-label="ส่งรายงานทางอีเมล"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d='M3 6h18v12H3z'/><path d='M3 7l9 6 9-6'/></svg></a><button type="button" class="btn sm" id="btn-csv" data-i18n="csv">CSV</button></span>
         </div>
       </article>
 
-      <article class="card" aria-labelledby="h-account">
+      <article class="card group" aria-labelledby="h-account">
         <h2 id="h-account" data-i18n="account_h">บัญชีของฉัน</h2>
-        <p id="acc-status"></p>
-        <p class="hint" id="acc-desk"></p>
+        <div class="row"><span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg33" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient><linearGradient id="cg34" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><path d="M6 42V12a3 3 0 0 1 2-3l14-5v38z" fill="url(#cg33)"/><rect x="11" y="14" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="11" y="21" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="11" y="28" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="18" y="14" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="18" y="21" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="18" y="28" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><ellipse cx="12" cy="10" rx="3" ry="1.6" fill="#FFFFFF" opacity=".55" transform="rotate(-30 12 10)"/><rect x="22" y="18" width="20" height="24" rx="4" fill="url(#cg34)"/><rect x="27" y="23" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="27" y="30" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="34" y="23" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/><rect x="34" y="30" width="4" height="4" rx="1" fill="#FFFFFF" opacity=".9"/></svg></span><span class="row-text"><span class="row-title" id="acc-status"></span><span class="sub" id="acc-desk"></span></span></div>
         <div class="btn-row">
           <button type="button" class="btn" id="btn-join" aria-haspopup="dialog" data-i18n="join">เข้าร่วมบริษัท</button>
           <button type="button" class="btn" id="btn-leave" hidden data-i18n="leave">ออกจากบริษัท</button>
@@ -254,16 +296,16 @@
         </div>
         <p class="ok-msg" id="acc-msg" role="status" aria-live="polite"></p>
       </article>
-
-
+      </div>
       <p class="center"><a href="hr/" data-i18n="hr_link">สำหรับฝ่ายบุคคล (HR) →</a></p>
     </section>
   </main>
 
   <nav class="tabbar" id="tabbar" data-i18n-aria="nav" aria-label="เมนูหลัก" hidden>
-    <a href="#home" class="tab" data-view="home"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><span data-i18n="nav_home">หน้าแรก</span></a>
-    <a href="#stats" class="tab" data-view="stats"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z"/></svg><span data-i18n="nav_stats">สถิติ</span></a>
-    <a href="#settings" class="tab" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-1.7-1L15 3.5h-4l-.4 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7 7 0 0 0 1.7 1l.4 2.5h4l.4-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg><span data-i18n="nav_settings">ตั้งค่า</span></a>
+    <div class="side-brand"><svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><defs><linearGradient id="lg35" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6E9BFF"/><stop offset="1" stop-color="#2447B5"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="18" fill="url(#lg35)"/><path d="M2 40 L62 22 V44 A18 18 0 0 1 44 62 H20 A18 18 0 0 1 2 44 Z" fill="#1F3E9E" opacity=".35"/><circle cx="34" cy="15" r="6.5" fill="#FFFFFF"/><path d="M32 25 V43 H45 V53" stroke="#FFFFFF" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M22 20 V48" stroke="#FFB07A" stroke-width="7.5" stroke-linecap="round"/></svg><p>Don't let your<br>boss kill you back</p></div>
+    <a href="#home" class="tab" data-view="home"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg36" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><path d="M6 22L24 7l18 15v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="url(#cg36)"/><rect x="19" y="28" width="10" height="15" rx="3" fill="#FFFFFF" opacity=".9"/><ellipse cx="16" cy="17" rx="5" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 16 17)"/></svg><span data-i18n="nav_home">วันนี้</span></a>
+    <a href="#stats" class="tab" data-view="stats"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg37" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg38" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><rect x="6" y="22" width="9" height="20" rx="3.5" fill="url(#cg38)"/><rect x="19.5" y="10" width="9" height="32" rx="3.5" fill="url(#cg37)"/><rect x="33" y="17" width="9" height="25" rx="3.5" fill="url(#cg38)"/><ellipse cx="23" cy="14" rx="2" ry="3" fill="#FFFFFF" opacity=".55" transform="rotate(0 23 14)"/></svg><span data-i18n="nav_stats">สถิติ</span></a>
+    <a href="#settings" class="tab" data-view="settings"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg39" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".55" stop-color="#8B6FF0"/><stop offset="1" stop-color="#6449C9"/></linearGradient></defs><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(0 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(45 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(90 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(135 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(180 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(225 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(270 24 24)"/><rect x="21" y="2" width="6" height="10" rx="2.5" fill="url(#cg39)" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="14" fill="url(#cg39)"/><circle cx="24" cy="24" r="5.5" fill="#FFFFFF"/><ellipse cx="18" cy="16" rx="4.5" ry="2.2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 18 16)"/></svg><span data-i18n="nav_settings">ตั้งค่า</span></a>
   </nav>
 
   <!-- ================= หน้าต่าง ================= -->
@@ -274,7 +316,7 @@
       <li data-i18n="help_2">ติด ultrasonic ที่ขอบล่างจอ ตัวบนเล็งหน้า ตัวล่างเล็งหน้าอก</li>
       <li data-i18n="help_3">นั่งตรง หลังชิดพนัก แล้วกด "ปรับเทียบท่า" ครั้งเดียว จากนั้นทำงานตามปกติ เครื่องจะเตือนด้วยเสียงเองเมื่อนั่งผิดท่า ไม่ต้องเปิดเว็บค้างไว้</li>
     </ol>
-    <form method="dialog"><button class="btn primary" data-i18n="ok">เข้าใจแล้ว</button></form>
+    <form method="dialog"><button class="btn dark" data-i18n="ok">เข้าใจแล้ว</button></form>
   </dialog>
 
   <dialog id="dlg-relax" aria-labelledby="h-relax-dlg">
@@ -285,7 +327,7 @@
       <li data-i18n="relax_3">มองค้างไว้อย่างน้อย 20 วินาที แล้วกระพริบตาช้าๆ</li>
     </ol>
     <p class="hint" data-i18n="relax_src">ที่มา: American Academy of Ophthalmology (กฎ 20-20-20)</p>
-    <form method="dialog"><button class="btn primary" data-i18n="ok">เข้าใจแล้ว</button></form>
+    <form method="dialog"><button class="btn dark" data-i18n="ok">เข้าใจแล้ว</button></form>
   </dialog>
 
   <dialog id="dlg-join" aria-labelledby="h-join">
@@ -313,7 +355,7 @@
       </div>
       <p class="err" id="j-err" role="alert"></p>
       <div class="btn-row">
-        <button type="submit" class="btn primary" id="btn-join-go" data-i18n="join_go">เข้าร่วม</button>
+        <button type="submit" class="btn dark" id="btn-join-go" data-i18n="join_go">เข้าร่วม</button>
         <button type="button" class="btn" id="btn-join-cancel" data-i18n="cancel">ยกเลิก</button>
       </div>
     </form>
@@ -332,6 +374,7 @@
 
   <script src="config.js"></script>
   <script src="js/api.js"></script>
+  <script src="js/art.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
