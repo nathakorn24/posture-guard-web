@@ -88,7 +88,7 @@
           <p class="visually-hidden" id="posture-live" aria-live="polite"></p>
           <dl class="mini-grid">
             <div class="mini"><dt data-i18n="dist_h">ห่างหน้าจอ</dt><dd class="num"><span id="dist-val">—</span><span class="unit" data-i18n="cm">ซม.</span></dd><dd class="chip" id="dist-chip"></dd></div>
-            <div class="mini"><dt data-i18n="judged">ตัดสินโดย</dt><dd class="txt" id="f-src">—</dd><dd class="note" data-i18n="every5">อัปเดตทุก 5 วินาที</dd></div>
+            <div class="mini"><dt data-i18n="judged">ตัดสินโดย</dt><dd class="txt" id="f-src">—</dd><dd class="note" data-i18n="every5">อัปเดตทันทีที่เครื่องตรวจ</dd></div>
             <div class="mini"><dt data-i18n="bad_for">ผิดท่าต่อเนื่อง</dt><dd class="txt" id="f-bad">—</dd></div>
             <div class="mini"><dt data-i18n="sit_for">นั่งต่อเนื่อง</dt><dd class="txt" id="f-sit">—</dd></div>
           </dl>
@@ -114,6 +114,8 @@
             <button type="button" class="ring-btn" data-cmd="relax_reset" data-i18n-aria="relax_reset" aria-label="เริ่มนับใหม่"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
           </div>
           <p class="relax-state" id="relax-state" aria-live="polite"></p>
+          <button type="button" class="btn session-cta" id="btn-session" aria-haspopup="dialog" aria-describedby="session-info"><span data-i18n="ses_start">เริ่มพักแบบมีคนพาทำ</span></button>
+          <p class="session-info" id="session-info"></p>
         </article>
 
         <article class="card warn-card" id="calib-card" hidden aria-labelledby="h-calib">
@@ -236,7 +238,7 @@
         <div class="row field-row">
           <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg29" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg30" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC9A3"/><stop offset=".55" stop-color="#F28A4B"/><stop offset="1" stop-color="#C9622A"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><rect x="19" y="3" width="10" height="6" rx="3" fill="#1F8A69"/><circle cx="24" cy="26" r="16" fill="url(#cg29)"/><circle cx="24" cy="26" r="11" fill="#FFFFFF" opacity=".92"/><path d="M24 26V17a9 9 0 0 1 9 9z" fill="url(#cg30)"/><circle cx="24" cy="26" r="2.4" fill="#1F8A69"/><ellipse cx="15" cy="17" rx="4.5" ry="2.2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 15 17)"/></svg></span>
           <span class="row-text"><label class="row-title" for="in-bad" data-i18n="bad_seconds">เตือนเมื่อผิดท่าต่อเนื่อง (วินาที)</label><span class="err" id="err-bad"></span></span>
-          <input id="in-bad" class="num-in" type="number" inputmode="numeric" min="5" max="600" step="1" aria-describedby="err-bad">
+          <input id="in-bad" class="num-in" type="number" inputmode="numeric" min="3" max="600" step="1" aria-describedby="err-bad">
         </div>
         <div class="row field-row">
           <span class="tile" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg31" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BEBD2"/><stop offset=".55" stop-color="#33B98F"/><stop offset="1" stop-color="#1F8A69"/></linearGradient><linearGradient id="cg32" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FB2FF"/><stop offset=".55" stop-color="#3C6BE8"/><stop offset="1" stop-color="#2A4FB8"/></linearGradient></defs><ellipse cx="24" cy="44" rx="13" ry="2.6" fill="#1F2430" opacity=".12"/><circle cx="24" cy="24" r="18" fill="url(#cg31)"/><ellipse cx="16" cy="14" rx="6" ry="2.6" fill="#FFFFFF" opacity=".55" transform="rotate(-30 16 14)"/><circle cx="26" cy="12.5" r="3.6" fill="#FFFFFF"/><path d="M23 18l-5 6 3 2 3-3 1.5 5-4 9h3.5l3.5-7 3 7h3.5l-4-11-1.5-7z" fill="#FFFFFF"/></svg></span>
@@ -372,6 +374,39 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <dialog id="dlg-session" class="session-dlg" aria-labelledby="ses-title" aria-describedby="ses-meta">
+    <div class="ses-top">
+      <div><h2 id="ses-title" data-i18n="ses_title">เซสชันพัก</h2><p class="ses-meta" id="ses-meta"></p></div>
+      <button type="button" class="i-btn dark-i" id="ses-close" data-i18n-aria="ses_end" aria-label="จบเซสชัน">✕</button>
+    </div>
+    <ol class="ses-progress" id="ses-progress" data-i18n-aria="ses_steps" aria-label="ขั้นตอน"></ol>
+    <div class="ses-body" id="ses-body">
+      <figure class="ses-art" id="ses-art" aria-hidden="true"></figure>
+      <div class="ses-text">
+        <p class="eyebrow" id="ses-count"></p>
+        <h3 class="ses-name" id="ses-name">—</h3>
+        <ul class="ses-how" id="ses-how"></ul>
+        <p class="ses-why" id="ses-why"></p>
+      </div>
+      <div class="ses-timer">
+        <div class="ring big-ring"><svg viewBox="0 0 84 84" aria-hidden="true" focusable="false"><circle class="ring-bg" cx="42" cy="42" r="34"/><circle class="ring-fg" id="ses-ring" cx="42" cy="42" r="34" stroke-dasharray="213.6" stroke-dashoffset="0" transform="rotate(-90 42 42)"/></svg>
+          <span class="ring-ic"><span class="ses-time" id="ses-time" role="timer" aria-live="off">0</span></span></div>
+        <p class="ses-cue" id="ses-cue" aria-live="assertive"></p>
+      </div>
+    </div>
+    <div class="ses-done" id="ses-done" hidden>
+      <div class="ses-done-art" aria-hidden="true"><svg width="72" height="72" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="cg40" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset=".55" stop-color="#F5B12E"/><stop offset="1" stop-color="#C9850F"/></linearGradient></defs><path d="M24 4l6 12.5 13.5 2-10 9.5 2.5 13.5L24 35l-12 6.5 2.5-13.5-10-9.5 13.5-2z" fill="url(#cg40)" stroke="#C9850F" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="20" cy="15" rx="4" ry="2" fill="#FFFFFF" opacity=".55" transform="rotate(-30 20 15)"/></svg></div>
+      <h3 data-i18n="ses_done_h">เยี่ยมมาก! พักครบแล้ว</h3>
+      <p id="ses-done-text"></p>
+    </div>
+    <div class="ses-btns" id="ses-btns">
+      <button type="button" class="btn dark" id="ses-pause"><span id="ses-pause-text" data-i18n="ses_pause">หยุดชั่วคราว</span></button>
+      <button type="button" class="btn" id="ses-skip" data-i18n="ses_skip">ข้ามท่านี้</button>
+    </div>
+    <div class="ses-btns" id="ses-done-btns" hidden>
+      <button type="button" class="btn dark" id="ses-finish" data-i18n="ses_back">กลับไปทำงาน</button>
+    </div>
+  </dialog>
   <script src="config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/art.js"></script>

@@ -21,7 +21,7 @@
       calib_row: "นั่งหลังชิดพนัก ตัวตรง แล้วกด เครื่องวัด 10 วินาที", test_row: "เครื่องจะปี๊บภายใน ~10 วินาที", start: "เริ่ม", test: "ทดสอบ",
       pair_bad: "รหัสไม่ถูกต้อง ตรวจตัวอักษรอีกครั้ง (รหัสไม่มีตัว O, I, 0, 1)", pair_len: "รหัสต้องมี 10 ตัว",
       pair_net: "เชื่อมต่ออินเทอร์เน็ตไม่ได้ ลองใหม่อีกครั้ง", hr_link: "สำหรับฝ่ายบุคคล (HR) →",
-      now: "ตอนนี้", every5: "อัปเดตเรียลไทม์ (~2 วินาที)", path_h: "เส้นทางท่านั่งวันนี้", idle_time: "ไม่ได้นั่ง / ลุกพัก",
+      now: "ตอนนี้", every5: "อัปเดตทันทีที่เครื่องตรวจ", path_h: "เส้นทางท่านั่งวันนี้", idle_time: "ไม่ได้นั่ง / ลุกพัก",
       g_morning: "สวัสดีตอนเช้า", g_afternoon: "สวัสดีตอนบ่าย", g_evening: "สวัสดีตอนเย็น", settings_greet: "ปรับให้เหมาะกับคุณ",
       sub_good: "ตัวตรง พิงพนัก ต่อเนื่อง {m} ทำได้ดีต่อไปนะ", sub_forward: "ถอยหลังพิงพนัก แล้วมองจอระดับสายตานะ",
       sub_backward: "ขยับสะโพกชิดพนัก นั่งตัวตรงขึ้นอีกนิด", sub_close: "ถอยเก้าอี้หรือดันจอออกไปให้ห่างอย่างน้อย {n} ซม.",
@@ -34,6 +34,18 @@
       ins_good: "วันนี้นั่งท่าถูก {p}% ของเวลา ยังไม่มีช่วงที่ผิดท่าเกิน 2 นาที ทำได้ดีมาก!", ins_none: "ยังไม่มีข้อมูลพอ นั่งทำงานหน้าเครื่องสักพักแล้วข้อสังเกตจะขึ้นที่นี่",
       sound_sub: "buzzer ดังเมื่อผิดท่าต่อเนื่อง", pair_s1: "เปิดเครื่องบนโต๊ะ ต่อ Wi-Fi", pair_s2: "ดูรหัส 10 ตัวในหน้าเครื่อง (ตั้งค่า → บัญชี)", pair_s3: "กรอกรหัสด้านล่าง ทำครั้งเดียวต่อเบราว์เซอร์",
       bad_for_s: "ผิดท่ามา {s}",
+      ses_start: "เริ่มพักแบบมีคนพาทำ", ses_title: "เซสชันพัก", ses_end: "จบเซสชัน", ses_steps: "ขั้นตอนของเซสชัน",
+      ses_info: "พาทำ {n} ท่า ประมาณ {m} นาที", ses_today: "วันนี้พักไปแล้ว {n} รอบ", ses_meta: "รอบที่ {k} ของวันนี้ · {n} ท่า · ~{m} นาที",
+      ses_why_fwd: "มีท่าดึงคางกับยืดอก เพราะตอนนี้คุณยื่นหน้า", ses_why_back: "เพิ่มท่ายืดหลังตรง เพราะตอนนี้คุณเอนหลัง", ses_why_sit: "เพิ่มลุกเดิน เพราะนั่งมา {m} นาทีแล้ว",
+      ses_step: "ท่าที่ {a} จาก {b}", ses_pause: "หยุดชั่วคราว", ses_resume: "ทำต่อ", ses_paused: "หยุดไว้ก่อน กด ทำต่อ เมื่อพร้อม", ses_skip: "ข้ามท่านี้",
+      ses_done_h: "เยี่ยมมาก! พักครบแล้ว", ses_done: "วันนี้พักครบไป {n} รอบแล้ว เครื่องเริ่มนับ 20 นาทีใหม่ให้แล้ว", ses_back: "กลับไปทำงาน",
+      st_eyes: "มองไกล 20 วินาที", st_chin: "ดึงคางเข้า (Chin tuck)", st_roll: "หมุนไหล่ไปข้างหลัง", st_chest: "ยืดอก เปิดไหล่", st_ext: "นั่งยืดหลังตรง", st_walk: "ลุกยืน เดินสั้นๆ",
+      how_eyes: "ละสายตาจากจอ มองของที่อยู่ไกลประมาณ 6 เมตร|กระพริบตาช้าๆ ไปด้วย", how_chin: "นั่งตัวตรง มองตรงไปข้างหน้า|ดึงคางเข้าหาลำคอเป็นเส้นตรง (ไม่ก้มหน้า) ค้าง 2 วินาที|คลายช้าๆ 4 วินาที ทำ 5 ครั้ง",
+      how_roll: "ยกไหล่ขึ้น แล้วหมุนไปข้างหลังและลงช้าๆ|หายใจสบายๆ ทำต่อเนื่อง", how_chest: "ประสานมือไว้หลังศีรษะ|ดึงข้อศอกไปข้างหลังเบาๆ จนรู้สึกตึงที่อก ค้างไว้|ถ้าเจ็บให้ผ่อนลง",
+      how_ext: "นั่งสะโพกชิดพนัก|ยืดอกขึ้น ไหล่ผ่อนลง ค้างไว้", how_walk: "ลุกจากเก้าอี้|เดินไปดื่มน้ำหรือเดินรอบโต๊ะ",
+      src_eyes: "กฎ 20-20-20 · American Academy of Ophthalmology", src_chin: "ท่าที่ใช้ในงานวิจัยแก้คอยื่น (ค้าง 2 วิ คลาย 4 วิ × 5)", src_roll: "Mayo Clinic: หมุนไหล่ไปหลังและลง เปิดอก",
+      src_chest: "Mayo Clinic: ยืดค้าง 15–30 วินาที ไม่กระตุก", src_ext: "งานวิจัย: ยืดกระดูกสันหลังช่วงอกช่วยท่าคอยื่นในพนักงานออฟฟิศ", src_walk: "Mayo Clinic: ลุกเดินทุกประมาณ 30 นาที",
+      cue_hold: "ดึงคางเข้า… ค้างไว้ (ครั้งที่ {r}/{n})", cue_rel: "คลายช้าๆ… (ครั้งที่ {r}/{n})", cue_roll: "หมุนไหล่รอบที่ {r}",
       nav: "เมนูหลัก", nav_home: "วันนี้", nav_stats: "สถิติ", nav_settings: "ตั้งค่า",
       status_h: "สถานะท่านั่ง", dist_h: "ห่างหน้าจอ", cm: "ซม.", bad_for: "ผิดท่าต่อเนื่อง", sit_for: "นั่งต่อเนื่อง", judged: "ตัดสินโดย",
       p_good: "นั่งถูกต้อง", p_forward: "โน้มตัว / ยื่นหน้าไปข้างหน้า", p_backward: "เอนหลังมากเกินไป / นั่งไหลลง",
@@ -105,7 +117,7 @@
       calib_row: "Sit upright against the backrest, then press — the device measures for 10 s", test_row: "The device will beep within ~10 seconds", start: "Start", test: "Test",
       pair_bad: "Wrong code — check the letters (codes never use O, I, 0 or 1)", pair_len: "The code has 10 characters",
       pair_net: "No internet connection — try again", hr_link: "For HR →",
-      now: "Right now", every5: "Live (~2 seconds)", path_h: "Today's posture path", idle_time: "Not seated / break",
+      now: "Right now", every5: "Updates as soon as the device checks", path_h: "Today's posture path", idle_time: "Not seated / break",
       g_morning: "Good morning", g_afternoon: "Good afternoon", g_evening: "Good evening", settings_greet: "Make it fit you",
       sub_good: "Upright against the backrest for {m}. Keep it up!", sub_forward: "Sit back against the chair and look at the screen at eye level",
       sub_backward: "Slide your hips back to the backrest and sit a little more upright", sub_close: "Move back so the screen is at least {n} cm away",
@@ -118,6 +130,18 @@
       ins_good: "{p}% of today in good posture, with no stretch of bad posture over 2 minutes. Great job!", ins_none: "Not enough data yet — work at the device for a while and an insight will appear here",
       sound_sub: "The buzzer sounds when bad posture continues", pair_s1: "Turn on the desk device and connect Wi-Fi", pair_s2: "Find the 10-character code on the device page (Settings → Account)", pair_s3: "Enter it below — once per browser",
       bad_for_s: "bad posture for {s}",
+      ses_start: "Start a guided break", ses_title: "Break session", ses_end: "End session", ses_steps: "Session steps",
+      ses_info: "{n} guided moves, about {m} min", ses_today: "{n} breaks done today", ses_meta: "Break {k} today · {n} moves · ~{m} min",
+      ses_why_fwd: "Chin tuck and chest stretch included because you're leaning forward", ses_why_back: "Added a sit-tall stretch because you're reclining", ses_why_sit: "Added a short walk because you've sat for {m} min",
+      ses_step: "Move {a} of {b}", ses_pause: "Pause", ses_resume: "Resume", ses_paused: "Paused — press Resume when ready", ses_skip: "Skip this move",
+      ses_done_h: "Great job! Break complete", ses_done: "{n} breaks done today. The device restarted its 20-minute timer", ses_back: "Back to work",
+      st_eyes: "Look far for 20 seconds", st_chin: "Chin tuck", st_roll: "Shoulder rolls back", st_chest: "Chest opener", st_ext: "Sit tall", st_walk: "Stand up and walk",
+      how_eyes: "Look away from the screen at something about 6 m away|Blink slowly", how_chin: "Sit tall and look straight ahead|Glide your chin straight back (don't nod down) and hold 2 s|Release slowly for 4 s, 5 times",
+      how_roll: "Lift your shoulders, then roll them back and down slowly|Breathe easily and keep going", how_chest: "Clasp your hands behind your head|Gently draw your elbows back until you feel a stretch, and hold|Ease off if it hurts",
+      how_ext: "Slide your hips back to the chair|Lift your chest, relax your shoulders, hold", how_walk: "Get up from the chair|Walk to get water or around your desk",
+      src_eyes: "20-20-20 rule · American Academy of Ophthalmology", src_chin: "Used in forward-head-posture research (hold 2 s, release 4 s × 5)", src_roll: "Mayo Clinic: roll shoulders back and down to open the chest",
+      src_chest: "Mayo Clinic: hold 15–30 s, no bouncing", src_ext: "Research: thoracic extension helps forward head posture in office workers", src_walk: "Mayo Clinic: get up about every 30 minutes",
+      cue_hold: "Chin back… hold (rep {r}/{n})", cue_rel: "Release slowly… (rep {r}/{n})", cue_roll: "Shoulder roll {r}",
       nav: "Main menu", nav_home: "Today", nav_stats: "Statistics", nav_settings: "Settings",
       status_h: "Posture status", dist_h: "Distance to screen", cm: "cm", bad_for: "Bad posture for", sit_for: "Sitting for", judged: "Judged by",
       p_good: "Good posture", p_forward: "Leaning / head forward", p_backward: "Reclining / slouching back",
@@ -286,10 +310,21 @@
   });
 
   // ================= ดึงข้อมูล =================
+  // v6.2: ข้อมูลเต็ม (สถิติ/ตั้งค่า) ทุก 10 วิ + สถานะสดแบบเบาทุก 0.5 วิ → ท่าบนเว็บเปลี่ยนแทบทันทีที่เครื่องตรวจเจอ
+  const FULL_MS = 10000, LIVE_MS = 500;
+  let liveTimer = 0, liveOk = true, fullAt = 0, liveBusy = false;
+  function schedule() {
+    clearTimeout(pollTimer); clearTimeout(liveTimer);
+    if (document.visibilityState !== "visible" || !PG.isPaired()) return;
+    const fullEvery = liveOk ? FULL_MS : POLL_MS;          // ฐานข้อมูลยังไม่มี pg_me_live → กลับไปดึงเต็มทุก 2 วิ
+    pollTimer = setTimeout(refresh, Math.max(0, fullAt + fullEvery - Date.now()));
+    if (liveOk) liveTimer = setTimeout(liveTick, LIVE_MS);
+  }
   async function refresh() {
     clearTimeout(pollTimer);
     if (!PG.isPaired()) { showView(false); return; }
     const r = await PG.me(14);
+    fullAt = Date.now();
     if (r && r.ok) {
       data = r; lastAt = Date.now(); $("net-banner").hidden = true;
       if (data.live && data.live.relax) relaxLocal = { left: data.live.relax.left, running: !!data.live.relax.running, at: Date.now() };
@@ -299,9 +334,25 @@
     } else {
       $("net-banner").hidden = false;
     }
-    if (document.visibilityState === "visible") pollTimer = setTimeout(refresh, POLL_MS);
+    schedule();
   }
-  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); else clearTimeout(pollTimer); });
+  async function liveTick() {
+    if (liveBusy || !data) { schedule(); return; }
+    liveBusy = true;
+    const r = await PG.live();
+    liveBusy = false;
+    if (r && r.ok) {
+      $("net-banner").hidden = true;
+      const changed = !data.live || !r.live || r.live.ts !== data.live.ts || r.online !== data.online;
+      data.online = r.online; data.last_seen = r.last_seen; data.live_age_s = r.live_age_s;
+      if (r.live) data.live = Object.assign({}, data.live, r.live);
+      renderConn();
+      if (changed) renderHome();
+    } else if (r && r.error === "unpaired") { data = null; showView(true); return; }
+    else if (r && r.error === "network" && /pg_me_live|PGRST202|404/.test(r.detail || "")) { liveOk = false; }
+    schedule();
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); else { clearTimeout(pollTimer); clearTimeout(liveTimer); } });
 
   // ================= แสดงผล =================
   function render() {
@@ -373,6 +424,7 @@
     $("relax-ring").setAttribute("stroke-dashoffset", (213.6 * Math.max(0, Math.min(1, left / 1200))).toFixed(1));
     $("relax-icon").setAttribute("d", relaxLocal.running ? "M7 5h4v14H7zM13 5h4v14h-4z" : "M8 5v14l11-7z");
     const st = left <= 0 && relaxLocal.running ? t("relax_due") : relaxLocal.running ? t("relax_running") : t("relax_paused");
+    maybePromptRelax(left); renderSessionInfo();
     if ($("relax-state").textContent !== st) $("relax-state").textContent = st;
   }
   setInterval(() => { if (data && !$("view-home").hidden) renderRelax(); }, 1000);
@@ -656,6 +708,124 @@
       renderRelax();
     } else toast(t("cmd_fail"));
   });
+
+
+  // ================= เซสชันพักแบบมีคนพาทำ (v6.3) =================
+  // ท่าอ้างอิง: 20-20-20 (AAO) · chin tuck ค้าง 2 วิ คลาย 4 วิ ×5 (โปรโตคอลงานวิจัย FHP) · หมุนไหล่ไปหลัง/ยืดอก ค้าง 15–30 วิ (Mayo Clinic)
+  // · ลุกเดินเมื่อนั่งนาน (Mayo: ลุกทุก ~30 นาที) · เลือกท่าตามข้อมูลจริงจากเครื่อง
+  const SES_KEY = "pg_sessions";
+  const STEP = {
+    eyes: { secs: 20 }, chin: { secs: 30, reps: 5, hold: 2, rel: 4 }, roll: { secs: 20 },
+    chest: { secs: 20 }, ext: { secs: 15 }, walk: { secs: 30 },
+  };
+  let ses = null, sesTimer = 0, relaxPrompted = false, audioCtx = null;
+  function todayKey() { const d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function sesLog() {
+    let o = {}; try { o = JSON.parse(localStorage.getItem(SES_KEY) || "{}"); } catch (e) { /* storage ปิด */ }
+    return o.date === todayKey() ? o : { date: todayKey(), n: 0, last: 0 };
+  }
+  function sesSave(o) { try { localStorage.setItem(SES_KEY, JSON.stringify(o)); } catch (e) { /* storage ปิด */ } }
+  function planSession() {
+    const live = (data && data.live) || {}, steps = ["eyes", "chin", "roll", "chest"], why = [];
+    if (live.posture === "backward") { steps.splice(3, 0, "ext"); why.push(t("ses_why_back")); }
+    if (live.posture === "forward" || live.is_bad) why.push(t("ses_why_fwd"));
+    if ((live.sit_for || 0) >= 1800) { steps.push("walk"); why.push(t("ses_why_sit", { m: Math.round(live.sit_for / 60) })); }
+    const secs = steps.reduce((a, k) => a + STEP[k].secs, 0);
+    return { steps, why, secs };
+  }
+  function renderSessionInfo() {
+    const lg = sesLog(), p = planSession();
+    let txt = t("ses_info", { n: p.steps.length, m: Math.max(1, Math.round(p.secs / 60)) });
+    if (lg.n) txt += " · " + t("ses_today", { n: lg.n });
+    if (p.why.length) txt += " · " + p.why.join(" · ");
+    if ($("session-info").textContent !== txt) $("session-info").textContent = txt;
+  }
+  function beep(f) {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.frequency.value = f || 660; g.gain.value = 0.08; o.connect(g); g.connect(audioCtx.destination);
+      o.start(); o.stop(audioCtx.currentTime + 0.18);
+    } catch (e) { /* ไม่มีเสียงก็ทำต่อได้ */ }
+    if (navigator.vibrate) navigator.vibrate(80);
+  }
+  function startSession(opener) {
+    const p = planSession(), lg = sesLog();
+    ses = { steps: p.steps, why: p.why, i: -1, left: 0, paused: false, no: lg.n + 1, total: p.secs };
+    $("ses-done").hidden = true; $("ses-done-btns").hidden = true; $("ses-body").hidden = false; $("ses-btns").hidden = false; $("ses-progress").hidden = false;
+    $("ses-meta").textContent = t("ses_meta", { k: ses.no, n: ses.steps.length, m: Math.max(1, Math.round(ses.total / 60)) }) + (ses.why.length ? " · " + ses.why.join(" · ") : "");
+    const ol = $("ses-progress"); ol.innerHTML = "";
+    ses.steps.forEach((k) => { const li = document.createElement("li"); li.textContent = t("st_" + k); ol.appendChild(li); });
+    openDialog($("dlg-session"), opener);
+    nextStep();
+    clearInterval(sesTimer); sesTimer = setInterval(sesTick, 250);
+  }
+  function nextStep() {
+    ses.i++;
+    if (ses.i >= ses.steps.length) return finishSession();
+    const k = ses.steps[ses.i], d = STEP[k];
+    ses.left = d.secs; ses.stepSecs = d.secs; ses.lastCue = "";
+    [...$("ses-progress").children].forEach((li, j) => { li.className = j < ses.i ? "done" : j === ses.i ? "now" : ""; if (j === ses.i) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current"); });
+    $("ses-art").innerHTML = (window.PG_STEP_ART || {})[k] || "";
+    $("ses-count").textContent = t("ses_step", { a: ses.i + 1, b: ses.steps.length });
+    $("ses-name").textContent = t("st_" + k);
+    $("ses-how").innerHTML = ""; t("how_" + k).split("|").forEach((h) => { const li = document.createElement("li"); li.textContent = h; $("ses-how").appendChild(li); });
+    $("ses-why").textContent = t("src_" + k);
+    $("ses-cue").textContent = t("st_" + k) + " — " + t("how_" + k).split("|")[0];
+    beep(ses.i ? 660 : 880);
+    renderSesTime();
+  }
+  function sesCue(k, elapsed) {
+    const d = STEP[k];
+    if (k === "chin") {
+      const cyc = d.hold + d.rel, rep = Math.min(d.reps, Math.floor(elapsed / cyc) + 1), inCyc = elapsed % cyc;
+      return t(inCyc < d.hold ? "cue_hold" : "cue_rel", { r: rep, n: d.reps });
+    }
+    if (k === "roll") return t("cue_roll", { r: Math.min(10, Math.floor(elapsed / 2) + 1) });
+    return "";
+  }
+  function renderSesTime() {
+    const k = ses.steps[ses.i], el = Math.max(0, ses.stepSecs - ses.left);
+    $("ses-time").textContent = Math.ceil(ses.left);
+    $("ses-ring").setAttribute("stroke-dashoffset", (213.6 * (1 - ses.left / ses.stepSecs)).toFixed(1));
+    const cue = sesCue(k, el);
+    if (cue && cue !== ses.lastCue) { ses.lastCue = cue; $("ses-cue").textContent = cue; if (k === "chin") beep(520); }
+  }
+  function sesTick() {
+    if (!ses || ses.paused || ses.i < 0 || ses.i >= ses.steps.length) return;
+    ses.left -= 0.25;
+    if (ses.left <= 0) nextStep(); else renderSesTime();
+  }
+  async function finishSession() {
+    clearInterval(sesTimer);
+    const lg = sesLog(); lg.n += 1; lg.last = Date.now(); sesSave(lg);
+    $("ses-body").hidden = true; $("ses-btns").hidden = true; $("ses-progress").hidden = true;
+    $("ses-done").hidden = false; $("ses-done-btns").hidden = false;
+    $("ses-done-text").textContent = t("ses_done", { n: lg.n });
+    $("ses-cue").textContent = t("ses_done_h");
+    beep(990); setTimeout(() => beep(1320), 220);
+    $("ses-finish").focus();
+    const r = await PG.command("relax_reset");          // เริ่มนับ 20 นาทีใหม่ที่เครื่อง
+    if (r && r.ok) relaxLocal = { left: 1200, running: true, at: Date.now() };
+    relaxPrompted = false; ses = null; renderRelax(); renderSessionInfo();
+  }
+  function endSession() { clearInterval(sesTimer); ses = null; if ($("dlg-session").open) $("dlg-session").close(); renderSessionInfo(); }
+  $("btn-session").addEventListener("click", (e) => startSession(e.currentTarget));
+  $("ses-pause").addEventListener("click", () => {
+    if (!ses) return; ses.paused = !ses.paused;
+    $("ses-pause-text").textContent = ses.paused ? t("ses_resume") : t("ses_pause");
+    $("ses-cue").textContent = ses.paused ? t("ses_paused") : t("st_" + ses.steps[ses.i]);
+  });
+  $("ses-skip").addEventListener("click", () => { if (ses) nextStep(); });
+  $("ses-close").addEventListener("click", endSession);
+  $("ses-finish").addEventListener("click", endSession);
+  $("dlg-session").addEventListener("cancel", () => { clearInterval(sesTimer); ses = null; renderSessionInfo(); });
+  // ครบ 20 นาที + เปิดหน้าเว็บอยู่ → พาเข้าเซสชันเอง (ครั้งเดียวต่อรอบ)
+  function maybePromptRelax(left) {
+    if (left > 0 || !relaxLocal.running || relaxPrompted || ses || document.visibilityState !== "visible" || $("view-home").hidden) return;
+    if (document.querySelector("dialog[open]")) return;
+    relaxPrompted = true; startSession($("btn-session"));
+  }
 
   // ================= หน้าต่าง =================
   function openDialog(dlg, opener) {

@@ -62,6 +62,8 @@
      *  settings_version, pending_cmds, company{id,name,department,display_name,share_name}|null,
      *  days[{date, sit_s, good_s, bad_s, alerts, breaks}] เก่า→ใหม่} */
     me(days) { return withToken("pg_me", { p_days: days || 14 }); },
+    /** สถานะสดแบบเบา (ท่าปัจจุบัน/ออนไลน์) — ดึงถี่ได้ */
+    live() { return withToken("pg_me_live", {}); },
     /** ตั้งค่า (ส่งเฉพาะที่แก้): bad_seconds 5–600, sit_minutes 10–180, nudge_seconds 0–120,
      *  screen_min 30–90, screen_max 50–150, fusion_tol 3–30, muted, eye_auto, push_enabled (bool), lang "th"|"en" */
     saveSettings(obj) { return withToken("pg_me_settings", { p_settings: obj || {} }); },
@@ -123,6 +125,9 @@
         return { ok: true, desk: "a1b2c3", online: true, last_seen: new Date().toISOString(), live: mockLive(), live_age_s: 3,
           settings: Object.assign({}, M.settings), settings_version: M.version, pending_cmds: 0, company: M.company,
           days: mockDays(Math.min(30, Math.max(1, b.p_days || 14))) };
+      case "pg_me_live":
+        if (!authed()) return { ok: false, error: "unpaired" };
+        return { ok: true, online: true, last_seen: new Date().toISOString(), live: mockLive(), live_age_s: 0 };
       case "pg_me_settings":
         if (!authed()) return { ok: false, error: "unpaired" };
         Object.assign(M.settings, b.p_settings || {}); M.version++;
